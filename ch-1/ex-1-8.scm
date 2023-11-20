@@ -8,7 +8,6 @@
 (define (average x y)
  (/ (+ x y) 2))
 
-
 (define (improve-newton guess x) 
 (/ (+ 
 (/ x (square guess))
