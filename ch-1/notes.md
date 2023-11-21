@@ -10,7 +10,7 @@ This is the concept of applying the operands only when their values is needed ( 
 
 ## Iterative process
 
-Compute at each iteration
+Compute at each iteration, well known states with fixed rules
 
 - Advantages = very straightforward
 
@@ -25,3 +25,5 @@ It each iteration create a delayed operation that will be executed at the end(th
 - Drawbacks = complicated at first to know how it works when not familiar with the concept and the space complexity can grow very rapidly (memory consumption) in programming languages that are not built to support tail recursion.
 
 personal thought : look like the normal order (lazy evaluation)
+
+recursive process != recursive procedure
