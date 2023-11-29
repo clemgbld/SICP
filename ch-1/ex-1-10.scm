@@ -117,3 +117,8 @@
 ;(A 0 (A 0 (A 0 8192)))
 ;(A 0 32768)
 ;65536
+
+(define (f n) (A 0 n))
+;Mathematical definition: 2 * n
+(define (g n) (A 1 n))
+;Mathematical definition: 2^n
