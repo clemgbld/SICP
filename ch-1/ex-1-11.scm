@@ -12,6 +12,9 @@
 (define (f-iter third second last count)
 (if (= count 2) last 
 (f-iter second last 
-(+ last (* 2 second) (* 3 third)) 
+(calc-last last second third) 
 (- count 1))))
+
+ (define (calc-last last second third) 
+ (+ last (* 2 second) (* 3 third)))
 
