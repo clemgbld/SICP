@@ -1,3 +1,4 @@
 (define (pascal c r) 
-(if (> c r) #f 
-1))
+(cond ((> c r) #f) 
+((or (= c 1) (= c r)) 1)
+(else 2)))
