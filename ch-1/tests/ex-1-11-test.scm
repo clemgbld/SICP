@@ -10,4 +10,12 @@
    (check (= 59 (f 6)) "sould be 59 when n is 6")
 )
 
+(define-each-test 
+(check (= 1 (f-bis 1)) "sould be 1 when x is 1")
+(check (= 2 (f-bis 2)) "sould be 2 when x is 2")
+(check (= 4 (f-bis 3)) "sould be 4 when x is 3")
+(check (= 11 (f-bis 4)) "sould be 11 when x is 4")
+(check (= 25 (f 5)) "sould be 25 when x is 5")
+)
+
 (run-registered-tests)
