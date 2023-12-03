@@ -1,5 +1,3 @@
-(load "ch-1/ex-1-7.scm")
-
 (define (fib n) 
 (cond ((= n 0) 0) 
 ((= n 1) 1)
