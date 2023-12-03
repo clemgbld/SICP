@@ -7,7 +7,7 @@
 (p (sine (/ angle 3.0)))))
 
 (sine 12.15)
-;p is called 4 times
+;p is called 5 times
 
 ;2) What is the orders of growth of the steps ? O(log(n))
 
