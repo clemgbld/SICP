@@ -1,5 +1,5 @@
 (define (multiply a b) (cond ((= b 0) 0)
-      ((is-even? b) (double (multiply a (/ b 2))))
+      ((is-even? b) (multiply (double a) (/ b 2)))
       (else (+ a (multiply a (- b 1))))))
 
 
