@@ -27,3 +27,7 @@ It each iteration create a delayed operation that will be executed at the end(th
 personal thought : look like the normal order (lazy evaluation)
 
 recursive process != recursive procedure
+
+## Tree recursion
+
+generally O(n\*m) (exponential complexity) if not memoized
