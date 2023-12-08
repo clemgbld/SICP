@@ -7,8 +7,7 @@
 
 (define-each-test
 (check (= 3 (next 2)) "should be 3")
-(check (= 5 (next 3)) "should be 5")
-)
+(check (= 5 (next 3)) "should be 5"))
 
 
 (run-registered-tests)
