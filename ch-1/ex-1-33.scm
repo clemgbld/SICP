@@ -2,22 +2,26 @@
 (define (sum-square-of-prime-numbers-between start end)
 (filtered-sum square start inc end prime?))
 
+(define (factorial-of-relatively-prime-number-between start end)
+(define (filter? x) 
+(relatively-prime? x end))
+(filtered-product identity start inc end filter?))
+
 (define (filtered-sum term a next b filter?) 
 (filtered-accumulate + 0 term a next b filter?))
+
+(define (relatively-prime? i n) 
+(if (< i 0) #f 
+(= 1 (gcd i n))))
+
+(define (filtered-product term a next b filter?) 
+(filtered-accumulate * 1 term a next b filter?))
 
 (define (filtered-accumulate combiner null-value term a next b filter?) 
 (if (> a b) null-value 
 (combiner (if (filter? a) (term a) 
 null-value) 
 (filtered-accumulate combiner null-value term (next a) next b filter?))))
-
-(define (product term a next b) 
-(accumulate * 1 term a next b))
-
-(define (accumulate combiner null-value term a next b) 
-(if (> a b) null-value 
-(combiner (term a) 
-(accumulate combiner null-value term (next a) next b))))
 
 (define (prime? n)
   (= n (smallest-divisor n)))
@@ -38,6 +42,16 @@ null-value)
   (= (remainder b a) 0))
 
 (define (inc x) (+ x 1))
+
+(define (gcd a b) (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+
+(define (identity x) x)
+
+
+
+
 
 
 
