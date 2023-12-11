@@ -8,11 +8,10 @@
 ;   (sum term (next a) next b))))
 
 ; iterative sum
-
 (define (sum term a next b) 
 (define (iter a result)
 (if (> a b) result
-(iter (next a) (+ (identity a) result)))) 
+(iter (next a) (+ (term a) result)))) 
 (iter a 0))
 
 (define (identity x) x)
