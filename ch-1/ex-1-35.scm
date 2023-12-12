@@ -10,9 +10,8 @@ next
 (try next))))
 (try first-guess))
 
-(define (golden-ratio x) 
-(fixed-point (lambda (x) (+ 1 (/ 1 x)))  1.0))
+(display (fixed-point (lambda (x) (+ 1 (/ 1 x))) 1.0))
 
-(golden-ratio 10000) ;about 1.618
+
 
 
