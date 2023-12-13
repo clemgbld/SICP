@@ -1,4 +1,4 @@
-(define (euler-expensiono-alternative n) 
+(define (euler-expension-bad-complexity n) 
 (cond ((< n 1) 1)
 ((= n 1) 1)
 ((= n 2) 2)
