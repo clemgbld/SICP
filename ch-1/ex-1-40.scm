@@ -22,10 +22,11 @@ next
 (define (newtons-method g guess) 
 (fixed-point (newton-transform g) guess))
 
-
 (define (cubic a b c) 
-(newtons-method ((lambda (a b c) 
-(lambda (x) (+ (cube x) (* a (square x)) (+ (* b x) c)))) a b c) 1))
+(lambda (x) 
+(+ (cube x) (* a (square x)) (+ (* b x) c))))
+
+(newtons-method  (cubic 1 1 1) 1)
 
 
 
