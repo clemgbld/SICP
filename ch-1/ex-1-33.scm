@@ -1,3 +1,4 @@
+(load "functions/functions.scm")
 
 (define (sum-square-of-prime-numbers-between start end)
 (filtered-sum square start inc end prime?))
@@ -38,16 +39,6 @@ null-value)
                n
                (+ test-divisor 1)))))
 
-(define (divides? a b)
-  (= (remainder b a) 0))
-
-(define (inc x) (+ x 1))
-
-(define (gcd a b) (if (= b 0)
-      a
-      (gcd b (remainder a b))))
-
-(define (identity x) x)
 
 
 

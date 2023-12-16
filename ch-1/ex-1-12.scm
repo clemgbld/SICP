@@ -1,3 +1,5 @@
+(load "functions/functions.scm")
+
 (define (pascal c r) 
 (cond ((is-out-of-bound c r) #f) 
 ((is-edge c r) 1)
@@ -10,5 +12,3 @@
 (define (is-edge c r) 
 (or (= c 1) (= c r)))
 
-(define (dec n) 
-(- n 1))

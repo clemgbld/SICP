@@ -1,3 +1,5 @@
+(load "functions/functions.scm")
+
 (define tolerance 0.00001)
 (define (fixed-point f first-guess)
  (define (close-enough? v1 v2) 
@@ -11,9 +13,6 @@ tolerance))
 next
 (try next))))
 (try first-guess))
-
-(define (average a b) 
-(/ (+ a b) 2))
 
 ;without average damping
 ;(display (fixed-point (lambda (x) (/ (log 1000) (log x))) 10.0))

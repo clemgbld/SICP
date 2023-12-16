@@ -1,3 +1,4 @@
+(load "functions/functions.scm")
 
 (define (fib n) (fib-iter 1 0 0 1 n))
 (define (fib-iter a b p q count) (cond ((= count 0) b)
@@ -11,7 +12,6 @@
  (+ (* b p) (* a q))
                         p
                         q
-                        (- count 1)))))
+                        (dec count)))))
 
-
-(define (double x) (+ x x))                        
+                       

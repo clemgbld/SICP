@@ -1,3 +1,5 @@
+(load "functions/functions.scm")
+
 (define (factorial n) 
 (product  identity 1 inc n))
 
@@ -21,10 +23,5 @@
    (if (even? n) 
        (/ (+ n 2) (+ n 1)) 
        (/ (+ n 1) (+ n 2)))) 
-
-(define (identity x) x)
-
-(define (inc x) (+ x 1))
-
 
 (pi-approximation 6)

@@ -1,3 +1,5 @@
+(load "functions/functions.scm")
+
 (define (factorial n) 
 (product identity 1 inc n))
 
@@ -23,6 +25,3 @@
 (iter (next a) (combiner result (term a)))))
 (iter a null-value))
 
-(define (identity x) x)
-
-(define (inc x) (+ x 1))

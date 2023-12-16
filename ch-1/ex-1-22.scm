@@ -1,3 +1,5 @@
+(load "functions/functions.scm")
+
 (define (smallest-divisor n)
   (find-divisor n 2))
 
@@ -9,9 +11,6 @@
         (else (find-divisor
                n
                (+ test-divisor 1)))))
-
-(define (divides? a b)
-  (= (remainder b a) 0))
 
 (define (prime? n)
   (= n (smallest-divisor n)))
