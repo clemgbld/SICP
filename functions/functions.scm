@@ -18,11 +18,21 @@
 (define (average a b) 
 (/ (+ a b) 2))
 
-(define (compose f g) 
-(lambda (x) 
-(f (g x))))
+(define (combinator fold apply) 
+        (define (fn . fns) 
+        (lambda (x) 
+            (fold apply x fns)))
+            fn)
 
-(define (pipe . fns) 
-(lambda (x) 
-(fold-left (lambda (acc fn) 
-(fn acc)) x fns)))
+(define (reverse-args func)
+  (lambda args
+    (apply func (reverse args))))
+
+(define (apply-fn fn arg) 
+(fn arg))
+
+        
+(define compose (combinator fold-right apply-fn))
+
+(define pipe (combinator fold-left (reverse-args apply-fn)))
+
