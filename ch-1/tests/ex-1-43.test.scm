@@ -3,8 +3,10 @@
 
 
 (define-each-test
- (check ( = 1 (square-then-inc 0))  "should be 2")
-  (check ( = 49 (square-then-inc 6))  "should be 49")
+(check (= 5   ((repeated square 0) 5))  "should square zero time")
+(check (= 25   ((repeated square 1) 5))  "should square 1 time")
+(check (= 625   ((repeated square 2) 5))  "should square 2 times")
+(check (= 390625   ((repeated square 3) 5))  "should square 3 times")
 )
 
 
