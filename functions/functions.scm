@@ -15,8 +15,10 @@
       a
       (gcd b (remainder a b))))
 
-(define (average a b) 
-(/ (+ a b) 2))
+(define (average . nums) 
+(/ (sum nums) (length nums)))
+
+(define (sum nums) (apply + nums))
 
 (define (combinator fold apply) 
         (define (fn . fns) 
