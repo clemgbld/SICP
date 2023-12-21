@@ -6,7 +6,13 @@
 
 (define (coord-y x) (cdr x))
 
-(define (midpoint-segment a b) 
+(define (make-segment x y) (cons x y))
+
+(define (select-segment-a x) (car x))
+
+(define (select-segment-b x) (cdr x))
+
+(define (midpoint-segment segment) 
     (make-point 
-        (average (coord-x a) (coord-x b)) 
-            (average (coord-y a) (coord-y b))))
+        (average (coord-x (select-segment-a segment)) (coord-x (select-segment-b segment))) 
+            (average (coord-y (select-segment-a segment)) (coord-y (select-segment-b segment))) ))
