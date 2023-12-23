@@ -13,9 +13,9 @@
     (lambda (f) 
         (lambda (x) (f ((n f) x)))))
 
-(define (add a b) 
+(define (add . nums) 
     (lambda (f) 
-        (lambda (x) ((a f) ((b f) x)))))
+        (lambda (x) ((pipe (map f nums)) x))))
 
 ;(add-1 (lambda (f)  (lambda (x) x))))
 ;(lambda (f)  (lambda (x) (f ((lambda (x) x) x)))))
