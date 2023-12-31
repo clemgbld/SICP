@@ -1,0 +1,6 @@
+(define (rev l) 
+    (define (recur li count) 
+        (if (< count 0) '() 
+            (cons (list-ref l count) 
+                (recur (cdr li) (- count 1)))))
+                      (recur l (length l)))
