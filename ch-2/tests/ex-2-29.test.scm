@@ -10,6 +10,8 @@
 (check (= 1 (total-weight (make-mobile (make-branch 1 1) (make-branch 1 0)))) "should get the total weight of a mobile")
 (check (= 2 (total-weight (make-mobile (make-branch 1 1) (make-branch 1 1)))) "should get the total weight of a mobile")
 (check (= 4 (total-weight (make-mobile (make-branch 1 (make-mobile (make-branch 1 1) (make-branch 1 1))) (make-branch 1 (make-mobile (make-branch 1 1) (make-branch 1 1)))))) "should get the total weight of a mobile")
+(assert-true (balanced? (make-mobile (make-branch 10 (make-mobile (make-branch 2 3) (make-branch 2 3))) (make-branch 12 5))) "should be balanced?")
+(assert-false (balanced? (make-mobile (make-branch 10 (make-mobile (make-branch 2 3) (make-branch 2 3))) (make-branch 13 5))) "should not be balanced?")
 )
 
 

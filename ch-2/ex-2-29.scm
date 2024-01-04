@@ -29,4 +29,12 @@
         (+ (total-weight (left-structure mobile)) 
             (total-weight (right-structure mobile)))))        
 
-;
+(define (torque branch) (* (branch-length branch) (total-weight (branch-structure branch))))
+
+(define (balanced? mobile) 
+   (if (not (pair? mobile)) 
+       true 
+       (and (= (torque (left-branch mobile)) (torque (right-branch mobile))) 
+            (balanced? (branch-structure (left-branch mobile))) 
+            (balanced? (branch-structure (right-branch mobile)))))) 
+  
