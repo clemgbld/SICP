@@ -38,3 +38,4 @@
             (balanced? (branch-structure (left-branch mobile))) 
             (balanced? (branch-structure (right-branch mobile)))))) 
   
+; d if we switch from list to cons with only need to change 2 selectors
