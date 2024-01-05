@@ -54,3 +54,9 @@
 
  (define (average-damp f) 
    (lambda (x) (average x (f x)))) 
+
+(define (tree-map transform tree)
+    (map (lambda (node) 
+        (if (pair? node) (square-tree node)
+            (transform node))) 
+            tree))
