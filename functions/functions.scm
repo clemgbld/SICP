@@ -60,3 +60,10 @@
         (if (pair? node) (square-tree node)
             (transform node))) 
             tree))
+
+
+(define (accumulate op initial sequence) 
+    (if (null? sequence)
+        initial
+            (op (car sequence)
+                (accumulate op initial (cdr sequence)))))
