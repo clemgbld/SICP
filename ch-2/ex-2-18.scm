@@ -1,7 +1,6 @@
 (define (rev l)
-  (define (recur count)
-    (if (or (null? l) (< count 0))
-        '()
-        (cons (list-ref l count)
-              (recur (- count 1)))))
-                (recur (- (length l) 1)))
+  (define (recur new-list old-list)
+    (if (null? old-list) 
+       new-list 
+            (recur (append (list (car old-list)) new-list )  (cdr old-list))))
+                            (recur '() l))
