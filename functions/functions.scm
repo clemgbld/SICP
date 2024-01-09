@@ -87,6 +87,9 @@
 (define (flatmap proc seq)
 (fold-right append '() (map proc seq)))
 
+(define (flat seq)
+    (fold-right append '() seq))
+
 
 (define (smallest-divisor n)
   (find-divisor n 2))
