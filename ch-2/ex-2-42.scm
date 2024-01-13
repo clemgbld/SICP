@@ -1,4 +1,3 @@
-
 (load "functions/functions.scm")
 
 (define (queens board-size) 
