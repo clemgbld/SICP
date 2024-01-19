@@ -39,18 +39,19 @@
 
 (define (addend s) (car s))
 
-(define (augend s) (let ((rest (cddr s)))
+(define (second-selector s)
+        (let ((rest (cddr s)))
     (if (> (length rest) 1) rest 
     (caddr s))))
+
+(define (augend s) (second-selector s))
 
 (define (product? x) (and (pair? x) (eq? (cadr x) '*)))
 
 (define (multiplier p) 
 (car p))
 
-(define (multiplicand p) (let ((rest (cddr p)))
-    (if (> (length rest) 1) rest 
-    (caddr p))))
+(define (multiplicand p) (second-selector p))
 
 (define (make-sum a1 a2) 
 (cond ((=number? a1 0) a2) ((=number? a2 0) a1)
