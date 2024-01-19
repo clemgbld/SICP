@@ -7,7 +7,7 @@
 (check (eq? 'y (deriv '(x * y) 'x)) "should be able to deriv multiplication with two parameter in infix notation")
 (check (= 4 (deriv '(x + (3 * (x + (y + 2)))) 'x)) "should deriv the expression")
 (check (= 4 (deriv '(x + 3 * (x + y + 2)) 'x)) "should deriv an expression that assumes that multiplication is done first and drop unneeded parentheses")
-(check (custom-equal? '((x * y) + (y * (x + 3)))  (deriv '(x * y * (x + 3)) 'x)) "should deriv a multiplication that drops unecessary parentheses")
+(check (custom-equal? '((x * y) + (y * (x + index)))  (deriv '(x * y * (x + 3)) 'x)) "should deriv a multiplication that drops unecessary parentheses")
 (check (custom-equal? '((x * y) + (y * (x + 3)))  (deriv '((x * y) * (x + 3)) 'x)) "should deriv a multiplication that drops unecessary parentheses")
 )
 
