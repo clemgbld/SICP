@@ -15,4 +15,8 @@
 (check (equal? '(1 2 3 1 2 3 4) (union-set '(1 2 3) '(1 2 3 4))) "should merge the two sets")
 )
 
+(define-each-test 
+(check (equal? '(1 2 3) (intersection-set '(1 2 3 6) '(1 2 3 4 5))) "should only take the intersection between the two sets")
+)
+
 (run-registered-tests)
