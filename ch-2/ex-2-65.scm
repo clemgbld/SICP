@@ -56,11 +56,12 @@
                               result-list)))))
 (copy-to-list tree '()))
 
-(define (union-set-tree set1 set2) 
-    (list->tree (union-set (tree->list set1) (tree->list set2))))
+(define (set-op op) 
+    (lambda (set1 set2) (list->tree (op (tree->list set1) (tree->list set2)))))
 
-(define (intersection-set-tree set1 set2) 
-    (list->tree (intersection-set (tree->list set1) (tree->list set2))))
+(define union-set-tree (set-op union-set))
+
+(define intersection-set-tree (set-op intersection-set))
 
 
 
