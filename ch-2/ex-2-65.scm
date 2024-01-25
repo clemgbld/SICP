@@ -19,7 +19,7 @@
 (define (right-branch tree) (caddr tree)) 
 
 (define (make-tree entry left right)
-    (list entry left right))
+   (list entry left right))
 
 (define (list->tree elements)
     (car (partial-tree elements (length elements))))
