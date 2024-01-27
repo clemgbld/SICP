@@ -1,0 +1,20 @@
+(load "ch-2/ex-2-67.scm")
+
+(define (encode-symbol target tree)
+    (cond ((leaf? tree) 
+        (if (eq? target (symbol-leaf tree)) '() 
+            (error "Symbol not in the tree"))) 
+          ((is-in-symbols target (symbols (left-branch tree))) 
+            (cons 0 (encode-symbol target (left-branch tree)))) 
+          (else (cons 1 (encode-symbol target (right-branch tree))))))
+
+(define (is-in-symbols target set)
+    (cond ((null? set) #f)
+          ((eq? (car set) target) #t)
+          (else (is-in-symbols target (cdr set)))))
+
+(define (encode message tree) 
+    (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
