@@ -17,6 +17,8 @@
 (let ((pair (car pairs)))
         (adjoin-set (make-leaf (car pair)
                                (cadr pair))
+;symbol
+; frequency
 (make-leaf-set (cdr pairs))))))
 
 (define (successive-merge leaves) 
@@ -26,7 +28,5 @@
           (successive-merge 
           (adjoin-set (make-code-tree (car leaves) (cadr leaves)) 
           (cddr leaves))))))
-
-  
 
 
