@@ -75,4 +75,6 @@
             ((is-real? t) (raise-real t))
             (else t)))
 
+(define (raise x) (apply-generic 'raise x))
+
 
