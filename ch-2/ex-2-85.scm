@@ -30,3 +30,14 @@
                (drop-type dropped) 
                 x)))
 
+(define (install-package-scheme-number)
+    (put 'project '(scheme-number) project-integer)'done)
+
+(define (install-package-rational)
+    (put 'project '(rational) project-rational)'done)
+
+(define (install-package-real)
+    (put 'project '(real) project-real)'done)
+
+(define (install-package-complex)
+    (put 'project '(complex) project-complex)'done)
