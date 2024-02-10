@@ -11,8 +11,13 @@
   
  ;; add into rational package 
  ;;; add into scheme-number package  
- (put 'sine 'rational (lambda (x) (sine (/ (numer x) (denom x)))))  
- (put 'cosine 'rational (lambda (x) (cosine (/ (numer x) (denom x))))) 
+ (put 'sine 'rational (lambda (x) (tag (sine (/ (numer x) (denom x))))))  
+ (put 'cosine 'rational (lambda (x) (tag (cosine (/ (numer x) (denom x)))))) 
+
+(put 'sine 'real 
+      (lambda (x) (tag (sin x)))) 
+ (put 'cosine 'real 
+      (lambda (x) (tag (cos x)))) 
 
 (define (install-complex-package)
 ;; imported procedures from rectangular and polar packages (define (make-from-real-imag x y)
