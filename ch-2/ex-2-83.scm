@@ -21,6 +21,7 @@
 
 (define (tag-real x) (attach-tag 'real x))
 
+
 (define (tag-rational x) (attach-tag 'rational x))
 
 (define (numer r) (car r))
@@ -44,14 +45,22 @@
 
 (define (tag-complex x) (attach-tag 'complex x))
 
+(define (is-complex? x ) 
+    (eq? (type-tag x) 'complex))
+
+(define (real x) 
+    (car (contents (contents x))))
+
 (define (make-from-real-imag x y) (cons x y))
 
 (define (raise-int int) 
     (tag-rational (make-rat (contents int) 1)))
 
 (define (raise-rational r) 
-    (let ((content (contents r)))
-        (tag-real (* 1.0 (/ (numer content) (denom content))))))
+    (let ((result (/ (numer (contents r)) (denom (contents r)))))
+        (tag-real (if (integer? result) 
+            result 
+            (* 1.0 result)))))
 
 (define (raise-real r)
     (let ((content (contents r)))
