@@ -1,23 +1,22 @@
 (load "functions/functions.scm")
 (load "ch-2/ex-2-83")
 
-(define tower '(scheme-number rational real complex))
 
 (define (raise-to target-type x) 
-    (let ((target-type-index (find-index target-type tower))
-          (type-index (find-index (type-tag x) tower)))
+    (let ((target-type-index (find-type-index target-type ))
+          (type-index (find-type-index (type-tag x) )))
             ((repeated raise-type (- target-type-index type-index))x)))
 
-(define (find-index target l) 
-    (define (recur n lst) 
-        (cond ((null? lst) #f) 
-            ((equal? target (car lst)) n)
-                (else (recur (+ 1 n) (cdr lst)))))
-                    (recur 0 l))
+(define (find-type-index target) 
+    (cond ((eq? target 'scheme-number) 0)
+            ((eq? target 'rational ) 1)
+            ((eq? target 'real) 2)
+            ((eq? target 'complex) 3)
+            (else (error "unknown type"))))
 
 (define (find-higher-type type1 type2) 
-    (let ((type1-index (find-index type1 tower)) 
-        (type2-index (find-index type2 tower)))
+    (let ((type1-index (find-type-index type1 )) 
+        (type2-index (find-type-index type2 )))
             (if (> type1-index type2-index) 
                 type1 
                 type2)))

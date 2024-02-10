@@ -11,11 +11,7 @@
 (check (eq? 'complex (find-higher-type 'complex 'scheme-number)) "should find the higher type in the tower")
 )
 
-(define-each-test
-(assert-false (find-index 'x tower) "should not find any index") 
-(check (= 0 (find-index 'scheme-number tower)) "should be the first index")
-(check (= 2 (find-index 'real tower)) "should be the expected index")
-)
+
 
 
 
