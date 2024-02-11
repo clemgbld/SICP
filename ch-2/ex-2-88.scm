@@ -1,9 +1,6 @@
 (define (negate x) 
     (apply-generic 'negate (type-tag x) (contents x)))
 
-
-
-
 (define (install-package-scheme-number)
     (put 'negate '(scheme-number) (lambda (x) ( - x )))'done)
 
@@ -11,7 +8,7 @@
     (put 'negate '(rational) (lambda (r) (make-rat (- (numer r)) (denom r))))'done)
 
 (define (install-package-real)
-    (put 'negate '(real) (lambda (x) ( - x  )))'done)
+    (put 'negate '(real) (lambda (x) (- x)))'done)
 
 (define (install-package-complex)
     (put 'negate '(complex) (lambda (c) (make-from-real-imag (- (real c) (- (imag c))))))'done)
