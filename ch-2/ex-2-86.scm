@@ -10,10 +10,10 @@
       (lambda (x) (tag (cos x)))) 
   
  ;; add into rational package 
- ;;; add into scheme-number package  
  (put 'sine 'rational (lambda (x) (tag (sine (/ (numer x) (denom x))))))  
  (put 'cosine 'rational (lambda (x) (tag (cosine (/ (numer x) (denom x)))))) 
 
+;; add into real package
 (put 'sine 'real 
       (lambda (x) (tag (sin x)))) 
  (put 'cosine 'real 
