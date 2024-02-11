@@ -1,8 +1,7 @@
 (define (negate x) 
     (apply-generic 'negate (type-tag x) (contents x)))
 
-(define (negate-terms l) 
-    (map (lambda (t) (make-term (order t) (negate (coeff t)))) l))
+
 
 
 (define (install-package-scheme-number)
@@ -18,6 +17,9 @@
     (put 'negate '(complex) (lambda (c) (make-from-real-imag (- (real c) (- (imag c))))))'done)
 
 (define (intall-package-poly)
+
+(define (negate-terms l) 
+    (map (lambda (t) (make-term (order t) (negate (coeff t)))) l))
 
  (define (negate-poly p) 
    (make-poly (variable p) (negate-terms (term-list p)))) 
