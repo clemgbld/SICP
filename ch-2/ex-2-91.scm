@@ -1,3 +1,19 @@
+(define (the-empty-termlist) '()) 
+   (define (rest-terms term-list) (cdr term-list)) 
+   (define (empty-termlist? term-list) 
+     (null? term-list)) 
+   (define (make-term order coeff) 
+     (list order coeff)) 
+   (define (order term) (car term)) 
+   (define (coeff term) (cadr term)) 
+
+(define (adjoin-term term term-list) 
+     (if (=zero? (coeff term)) 
+         term-list 
+         (cons term term-list)))
+
+(define (first-term term-list) (car term-list)) 
+
  (define (div-terms L1 L2) 
      (if (empty-termlist? L1) 
          (list (the-empty-termlist) (the-empty-termlist)) 

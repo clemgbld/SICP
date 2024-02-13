@@ -18,6 +18,9 @@
 (define (negate-terms l) 
     (map (lambda (t) (make-term (order t) (negate (coeff t)))) l))
 
+(define (sub-terms L1 L2) 
+    (add-terms L1 (negate-terms L2)))
+
  (define (negate-poly p) 
    (make-poly (variable p) (negate-terms (term-list p)))) 
 
