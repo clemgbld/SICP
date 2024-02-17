@@ -15,7 +15,7 @@
     (begin (set! initial-amount (- initial-amount amount)) initial-amount)))
 
     (define (reject-operation amount) 
-        (if (= count 7) 
+        (if (> count 7) 
             (call-the-cops) 
             (begin (set! count (+ 1 count)) "Incorrect password"))) 
 

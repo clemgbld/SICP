@@ -23,6 +23,7 @@
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
+    (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'deposit) 10)) "should not let the user make a deposit when the user give a wrong password")
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'deposit) 10)) "should not let the user make a deposit when the user give a wrong password")
     (check (equal? "Cops called" ((account 'some-other-secret-password 'withdraw) 10)) "should call the cops when the user enter a wrong password 7 times")
@@ -34,6 +35,7 @@
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
+
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a withdral when the user give a wrong password")
     (check (equal? 110 ((account 'some-secret-password 'deposit) 10)) "should make a deposit")
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'deposit) 10)) "should not let the user make a deposit when the user give a wrong password")
