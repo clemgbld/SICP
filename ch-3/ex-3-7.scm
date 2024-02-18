@@ -5,6 +5,7 @@
         (error "Wrong password!")
         (lambda (entered-password m) 
             (cond
+                ((eq? m 'is-same-password?) (equal? entered-password joint-password))
                 ((not (eq? entered-password joint-password)) (lambda (m) "Incorrect password")) 
                 ((eq? m 'deposit) (acc acc-password m))
                 ((eq? m 'withdraw) (acc acc-password m))
