@@ -11,6 +11,7 @@
 
 (lambda (entered-password m) 
     (cond
+        ((eq? m 'is-same-password?) (eq? entered-password password))
         ((not (eq? entered-password password)) reject-operation) 
         ((eq? m 'deposit) deposit)
         ((eq? m 'withdraw) withdraw)

@@ -15,6 +15,12 @@
 
 (let ((account (make-account 100 'some-secret-password)))
     (check (equal? "Incorrect password" ((account 'some-other-secret-password 'withdraw) 10)) "should not let the user make a deposit when the user give a wrong password"))
+
+(let ((account (make-account 100 'some-secret-password)))
+    (assert-true (account 'some-secret-password 'is-same-password?) "should be the same password"))
+
+(let ((account (make-account 100 'some-secret-password)))
+    (assert-false (account 'some-wrong-password 'is-same-password?) "should not be the same password"))
 )
 
 (run-registered-tests)
