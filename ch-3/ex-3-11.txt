@@ -1,0 +1,5 @@
+- the local state of acc is kept in the ENV1 thanks to the closure created by the call to (make-account some-number)
+
+- the local state of the two account are kept distinct because the two states are not in the same environement
+
+- only the global environement is shared between acc and acc2
