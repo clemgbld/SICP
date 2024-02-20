@@ -1,0 +1,3 @@
+the two version of the withdrwal prossesor has the same behavior because when we create an object with each (make-withdraw 100) it creates an object with an initial balance and (make-withdraw some-number) will either decrease the balance or return the "Insuffisent funds" string.
+the variable who is set in the first version is the directly the parameter of make-withdraw.
+Whereas in the second version we do not set directly the parameter of the make-withdraw procedure but create another scope and bind the parameter to this scope and we set the parameter of the new scope while keeping the parameter of make-withdraw unchanged.
