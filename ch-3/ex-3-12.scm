@@ -2,7 +2,8 @@
     (set-cdr! (last-pair x) y) x)
 
 (define (last-pair x)
-    (if (null? (cdr x)) x (last-pair (cdr x))))
+    (if (null? (cdr x)) x 
+        (last-pair (cdr x))))
 
 
 (define x (list 'a 'b)) 
