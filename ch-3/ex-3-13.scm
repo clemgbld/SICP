@@ -6,5 +6,6 @@
 (define z (make-cycle (list 'a 'b 'c)))
 
 (last-pair z)
-;infinite loop because mutating the last pair of a list with itself create a cyclic dependcy because 
-; last pointer of the last pair of the list is pointed at the first pointer of the first pair of the list 
+;infinite recursion because mutating the last pair of a list with itself create a cyclic dependcy because 
+; last pointer of the last pair of the list is pointed at the first pointer of the first pair of the list
+; thus make-cycle is creating a circular list 
