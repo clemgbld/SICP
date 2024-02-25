@@ -9,6 +9,11 @@
     (let ((z (cons y y)))
         (let ((x (cons z z)))
             (check (= 3 (count-pairs x)) "should not count a pair more than once"))))
+(let ((y (cons 1 2)))
+    (let ((z (cons y y)))
+        (let ((x (cons z z)))
+            (set-car! y x)
+            (check (= 3 (count-pairs x)) "should return when there is a circular deps"))))
 )
 
 

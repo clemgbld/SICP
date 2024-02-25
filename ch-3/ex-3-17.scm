@@ -8,13 +8,11 @@
     (define already-counted '())
 
     (define (recur x) 
-        (if 
-            (not (pair? x)) 0 
-                (cond ((has-already-been-counted? already-counted x)
-                (+ (recur (car x)) (recur (cdr x))))
+                (cond ((or (not (pair? x)) (has-already-been-counted? already-counted x))
+                0)
                 (else
                     (set! already-counted (cons x already-counted))
                     (+ (recur (car x)) 
                         (recur (cdr x)) 
-                            1)))))
+                            1))))
     (recur x))
