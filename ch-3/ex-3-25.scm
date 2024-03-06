@@ -7,28 +7,35 @@
             (else (assoc key (cdr records)))))
 
         (define (lookup keys) 
-            (let ((subtable
-                (assoc (car keys) (cdr local-table))))
-                (if subtable
-                     (let ((record
-                         (assoc (cadr keys) (cdr subtable))))
-                          (if record (cdr record) false))
-                             false)))
+            (define (recur keys table)
+                (if (null? (cdr keys)) 
+                    (let ((record (assoc (car keys) (cdr table))))
+                        (if record (cdr record) false))
+                    (let ((subtable (assoc (car keys) (cdr table))))
+                        (if subtable
+                            (recur (cdr keys) subtable)
+                            false))))
+            (recur keys  local-table))
+
+    (define (build-key-list keys value)
+        (define (recur keys)
+            (if (null? (cdr keys)) 
+                (cons (car keys) value)
+                (list (car keys) (recur (cdr keys)))))
+        (recur keys))
 
     (define (insert! keys value) 
-        (let ((subtable
-         (assoc (car keys) (cdr local-table))))
-            (if subtable
-                (let ((record
-                    (assoc (cadr keys) (cdr subtable))))
-                        (if record
-                            (set-cdr! record value) 
-                            (set-cdr! subtable
-                            (cons (cons (cadr keys) value)
-                                  (cdr subtable)))))
-                (set-cdr! local-table
-                      (cons (list (car keys) (cons (cadr keys) value))
-                            (cdr local-table)))))
+        (define (recur keys table)
+            (if (null? (cdr keys))
+                (let ((record (assoc (car keys) (cdr table))))
+                    (if record 
+                        (set-cdr! record value)
+                        (set-cdr! table (cons (cons (car keys) value) (cdr table)))))
+                (let ((subtable (assoc (car keys) (cdr table))))
+                    (if subtable 
+                        (recur (cdr keys) subtable)
+                        (set-cdr! table (cons (build-key-list keys value) (cdr table)))))))
+        (recur keys local-table)
                             'ok)
     (define (dispatch m)
         (cond ((eq? m 'lookup-proc) lookup)
