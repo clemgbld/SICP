@@ -23,7 +23,8 @@
 
 (let ((table (make-table)))
     ((table 'insert-proc!) (list 'animal 'fish 'shark ) 1) 
-    (check (= 1 ((table 'lookup-proc)(list 'animal 'fish 'shark))) "should pass the acceptance test")
+    ((table 'insert-proc!) (list 'animal 'fish 'shark ) 2) 
+    (check (= 2 ((table 'lookup-proc)(list 'animal 'fish 'shark))) "should pass the acceptance test")
  )
 )
 
