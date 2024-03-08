@@ -2,7 +2,7 @@
     (let ((local-table (list '*table*)))
 
 (define (assoc key records)
-        (cond ((null? records) false)
+        (cond (( or (null? records) (not (list? records))) false)
             ((equal? key (caar records)) (car records)) 
             (else (assoc key (cdr records)))))
 

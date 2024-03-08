@@ -36,11 +36,15 @@
     
         (define (recur keys tree)
             (let ((new-node (make-tree (cons (car keys) value) '() '())))
-                (cond ((key<? (car keys) (car (entry tree)))
-                (set-left-branch! tree new-node))
+                (cond ((equal? (car keys) (car (entry tree)))
+                    (set-cdr! (entry tree) value)) 
+                ((key<? (car keys) (car (entry tree)))
+                (if (null? (left-branch tree))
+                    (set-left-branch! tree new-node)
+                    (recur keys (left-branch tree))))
                 (else (if (null? (right-branch tree)) 
                     (set-right-branch! tree new-node)
-                        (recur keys (right-branch tree)))))))
+                    (recur keys (right-branch tree)))))))
 
         (if (null? root-node) 
             (set! root-node (make-tree (cons (car keys ) value) '() '()))

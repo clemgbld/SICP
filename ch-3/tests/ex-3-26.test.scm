@@ -26,7 +26,11 @@
    ((table 'insert-proc!) (list 2) 'b) 
    ((table 'insert-proc!) (list -1) 'c) 
    ((table 'insert-proc!) (list 4) 'd) 
+   ((table 'insert-proc!) (list -2) 'e)
+   ((table 'insert-proc!) (list 1) 'z)
    (check (equal? 'b ((table 'lookup-proc)(list 2))) "should find a stored element in a deep tree")
+   (check (equal? 'c ((table 'lookup-proc)(list -1))) "should find a stored element in a deep tree")
+   (check (equal? 'z ((table 'lookup-proc)(list 1))) "should be able to update the value of an existing record")
    )
 
 )

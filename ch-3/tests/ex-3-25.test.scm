@@ -26,6 +26,13 @@
     ((table 'insert-proc!) (list 'animal 'fish 'shark ) 2) 
     (check (= 2 ((table 'lookup-proc)(list 'animal 'fish 'shark))) "should pass the acceptance test")
  )
+
+(let ((table (make-table)))
+    ((table 'insert-proc!) (list 'animal 'fish 'shark ) 1) 
+    ((table 'insert-proc!) (list 'animal 'fish ) 2) 
+    (check (= 2 ((table 'lookup-proc)(list 'animal 'fish))) "should pass the acceptance test")
+    (assert-false ((table 'lookup-proc)(list 'animal 'fish 'shark)) "should pass the acceptance test")
+ )
 )
 
 
