@@ -19,18 +19,24 @@
 
 
         (define (lookup keys) 
-            (define (recur keys tree) 
+            (define (recur key tree) 
                 (if (null? tree) 
                     #f
-                    (let ((key (car keys)) 
-                        (head-key (car (entry tree))))
+                    (let ((head-key (car (entry tree))))
                         (cond ((equal? key head-key)
                         (cdr (entry tree)))
                        ((key<? key head-key)
-                            (recur keys (left-branch tree))) 
-                        (else (recur keys (right-branch tree)))))))
+                            (recur key (left-branch tree))) 
+                        (else (recur key (right-branch tree)))))))
 
-            (recur keys root-node))
+                    (define (iter keys tree)
+                        (let ((sub-tree (recur (car keys) tree)))
+                         (if (null? (cdr keys)) sub-tree 
+                                (if sub-tree
+                                    (iter (cdr keys) sub-tree)
+                                    #f))))
+
+            (iter keys root-node))
 
     (define (insert! keys value) 
     

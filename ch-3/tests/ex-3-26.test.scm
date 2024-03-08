@@ -36,6 +36,7 @@
 (let ((table (make-table < )))
    ((table 'insert-proc!) (list 1 2) 'a) 
    (check (equal? (list (cons 2 'a) '() '()) ((table 'lookup-proc)(list 1))) "should find the expected value in an mutlti dimensional lookup table")
+   (check (equal? 'a ((table 'lookup-proc)(list 1 2))) "should find the expected value in an mutlti dimensional lookup table")
    )
 
 )
