@@ -39,6 +39,38 @@
    (check (equal? 'a ((table 'lookup-proc)(list 1 2))) "should find the expected value in an mutlti dimensional lookup table")
    )
 
+(let ((table (make-table < )))
+   ((table 'insert-proc!) (list 1 2) 'a) 
+   ((table 'insert-proc!) (list 2 1) 'c) 
+   ((table 'insert-proc!) (list -1 1) 'b) 
+   ((table 'insert-proc!) (list 1 2) 'z) 
+   (check (equal? 'c ((table 'lookup-proc)(list 2 1))) "should be able to insert deep if the target node is not the root node")
+   (check (equal? 'b ((table 'lookup-proc)(list -1 1))) "should be able to insert deep if the target node is not the root node")
+   (check (equal? 'z ((table 'lookup-proc)(list 1 2))) "should be able to change an existing value in a multi dimensional lookup table")
+   )
+
+(let ((table (make-table < )))
+   ((table 'insert-proc!) (list 1) 'a) 
+   ((table 'insert-proc!) (list 1 2) 'a) 
+   (check (equal? 'a ((table 'lookup-proc)(list 1 2))) "should be able to increase the dimension of the lookup table")
+   )
+
+(let ((table (make-table < )))
+   ((table 'insert-proc!) (list 1 2) 'a) 
+   ((table 'insert-proc!) (list 2 1) 'c) 
+   ((table 'insert-proc!) (list -1 1) 'b) 
+   ((table 'insert-proc!) (list 1) 'a) 
+   ((table 'insert-proc!) (list 2 1) 'k) 
+   ((table 'insert-proc!) (list -1 1) 'e) 
+   ((table 'insert-proc!) (list 5 6 7 8 9) 'z) 
+   (check (equal? 'k ((table 'lookup-proc)(list 2 1))) "shoud pass the acceptance test")
+   (check (equal? 'e ((table 'lookup-proc)(list -1 1))) "shoud pass the acceptance test")
+   (check (equal? 'a ((table 'lookup-proc)(list 1))) "shoud pass the acceptance test")
+   (check (equal? 'z ((table 'lookup-proc)(list 5 6 7 8 9))) "shoud pass the acceptance test")
+   (assert-false ((table 'lookup-proc)(list 5 6 7 8 9 11 23 34)) "shoud pass the acceptance test")
+   (assert-false ((table 'lookup-proc)(list 5 6 55)) "shoud pass the acceptance test")
+   )
+
 )
 
 
