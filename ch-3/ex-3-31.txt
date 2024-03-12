@@ -1,0 +1,3 @@
+we need an initialization to add the the action into the agenda
+before running it and we need to run it to add it into the agenda
+that is why we are executing the action once before reruning it with propagate
