@@ -1,0 +1,1 @@
+We need to use a queue for the segments because if we use a normal list it will execute the procedures in the wrong order (by executing the last action inserted instead of the first) and give a wrong value
