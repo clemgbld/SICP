@@ -7,7 +7,8 @@
                 (error "square less than 0: SQUARER"
                    (get-value b))
                 (set-value! a (sqrt (get-value b)) me)) 
-        (set-value! b (square (get-value a)) me))) 
+        (if (has-value a)
+            (set-value! b (square (get-value a)) me)))) 
 
     (define (process-forget-value)
         (forget-value! a me)
