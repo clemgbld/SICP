@@ -1,0 +1,7 @@
+(define x 10)
+(define s (make-serializer)) (parallel-execute
+(lambda () (set! x ((s (lambda () (* x x)))))) (s (lambda () (set! x (+ x 1)))))
+
+all of the fives posibilities remains possible because
+the mutation in the first procedure happended outside the
+serializer.
