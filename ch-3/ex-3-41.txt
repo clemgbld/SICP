@@ -1,0 +1,2 @@
+An un protected access to balance is safe because it's a read
+operation that don't mutate any value
