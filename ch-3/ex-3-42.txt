@@ -1,0 +1,4 @@
+Yes it is safe to make this change and there is no difference in what
+concurrency is allowed by these two versions of make-account.
+This change is even more efficient because the serialization only
+happen one at the construction of the account
