@@ -1,0 +1,7 @@
+If we assume that the balance in from-account is at least amount
+then Louis is wrong because the essential difference between the
+transfer problem and the exchange problem is that the exchange
+problem make a computation based on the accounts balance and the
+transfer problem (which is more simple ) don't do that and it is
+that computation that can lead to incorrects balance if the exchange
+is not serialized with the accounts's serializers.
