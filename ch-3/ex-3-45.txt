@@ -1,0 +1,3 @@
+A deadlock will happen because the exchange procedure is serialized by the same serializers
+than account 1 and account 2 so withdraw and deposit can't start before exchange finish its execution but
+exchange can't finish before withdraw and deposit both finish their executions.
