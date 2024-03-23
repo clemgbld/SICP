@@ -25,5 +25,5 @@
 
 ; without the optimization provided by memo-proc the result would have been
 ;different for the sum because thanks to the memoization it call accum only once with the same number
-;without the memo-proc the sum would have been 246 
+;without the memo-proc the sum would have been different 
 ;and the the computation of the 8 first item of the stream would have happen a second time when calling display-stream 
