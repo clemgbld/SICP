@@ -3,7 +3,7 @@
 
 
 (define-each-test
-(check (= 720 (stream-ref factorials 6)) "should get the sixth element of the factorails stream")
+(check (= 720 (stream-ref factorials 5)) "should get the sixth element of the factorails stream")
 )
 
 
