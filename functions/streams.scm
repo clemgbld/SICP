@@ -25,8 +25,14 @@
     (newline) 
     (display x))
 
-(define (add-streams s1 s2)
-    (stream-map + s1 s2))
+(define (op-streams op)
+    (lambda (s1 s2) (stream-map op s1 s2)))
+
+(define mul-streams 
+    (op-streams  *)) 
+
+(define add-streams 
+    (op-streams +))
 
 (define (scale-stream stream factor)
     (stream-map (lambda (x) (* x factor)) stream))
