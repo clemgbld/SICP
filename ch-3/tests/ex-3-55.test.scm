@@ -8,6 +8,7 @@
 (check (= 6 (stream-ref (partial-sums integers) 2)) "should get the third element of the partials sum stream of integers")
 (check (= 15 (stream-ref (partial-sums integers) 4)) "should get the fifth element of the partials sum stream of integers")
 (check (= 21 (stream-ref (partial-sums integers) 5)) "should get the sixth element of the partials sum stream of integers")
+(check (= 20 (stream-ref (partial-sums (integers-starting-from 2)) 4)) "should works with another stream")
 )
 
 
