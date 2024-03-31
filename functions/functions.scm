@@ -111,3 +111,6 @@
     ((= n 1) f)
       ((even? n) (repeated (compose f f) (/ n 2))) 
         (else (compose f (repeated f (- n 1))))))
+
+(define (negate x)
+  (* - 1 x))

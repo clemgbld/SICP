@@ -57,3 +57,6 @@
                    s1car
                    (merge (stream-cdr s1)
                     (stream-cdr s2)))))))))
+
+(define ones 
+    (cons-stream 1 ones))
