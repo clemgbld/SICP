@@ -1,0 +1,3 @@
+a - Alyssa is right because in Louis Reasoner version we create a new stream in each stream-cdr and therefore doing rundundant operation and don't beneficiate of the memoproc optimization
+
+b - No without the memoization the two implementation are similar from a performance point of view
