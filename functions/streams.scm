@@ -77,3 +77,8 @@
             (interleave
                 (stream-map (lambda (x) (list (stream-car s) x)) (stream-cdr t))
                 (pairs (stream-cdr s) (stream-cdr t)))))
+
+(define (stream-take s n)
+    (if (or (= n 0) (stream-null? s)) 
+        the-empty-stream
+        (cons-stream (stream-car s) (stream-take (stream-cdr s) (- n 1)))))
