@@ -1,4 +1,3 @@
-
 (load "functions/streams.scm")
 
 (define (make-pair head)
