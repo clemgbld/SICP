@@ -17,11 +17,11 @@
         (filter-by-consecutive-weight (stream-cdr s) n weight))))
 
 (define (consecutive-number-series n weight)
-    (stream-map weight-cube 
+    (stream-map weight 
         (filter-by-consecutive-weight 
         (weighted-pairs integers integers weight) 
         n 
-        weight-cube)))
+        weight)))
 
 (define ramanujan-numbers 
     (consecutive-number-series 2 weight-cube))
