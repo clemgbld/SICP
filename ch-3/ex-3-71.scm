@@ -1,4 +1,3 @@
-(load "functions/streams.scm")
 (load "ch-3/ex-3-70.scm")
 
 (define (weight-cube p)
@@ -17,9 +16,12 @@
         (filter-by-consecutive-weight (stream-cdr s) n weight))
         (filter-by-consecutive-weight (stream-cdr s) n weight))))
 
-(define ramanujan-numbers 
+(define (consecutive-number-series n weight)
     (stream-map weight-cube 
         (filter-by-consecutive-weight 
-        (weighted-pairs integers integers weight-cube) 
-        2 
+        (weighted-pairs integers integers weight) 
+        n 
         weight-cube)))
+
+(define ramanujan-numbers 
+    (consecutive-number-series 2 weight-cube))
