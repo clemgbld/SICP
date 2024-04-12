@@ -7,9 +7,9 @@
         (if (stream-null? requests)
             the-empty-stream
             (cons-stream 
-            (next (stream-car requests) rand-init) 
-            (stream-map  
-                next 
-                (stream-cdr requests) 
-                random-numbers))))
+                (next (stream-car requests) rand-init) 
+                (stream-map  
+                    next 
+                    (stream-cdr requests) 
+                    random-numbers))))
     random-numbers)
