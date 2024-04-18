@@ -5,13 +5,15 @@
 
 ;b in order to solve Louis's problem we need to change the procedures of the application procedure
 
+(define (tagged-list? exp tag) (if (pair? exp)
+            (eq? (car exp) tag)
+            false))
 
 (define (application? exp) 
-    (and (pair? exp) 
+    (and (tagged-list? exp 'call) 
          (and (not (null? (cdr exp))) 
-         (symbol? (cadr exp))) 
-         (eq? (car exp) 'call)) )
+         (symbol? (cadr exp)))) )
 
-;(define (operator exp) (car exp))
-;(define (operands exp) (cdr exp))
+(define (operator exp) (cadr exp))
+(define (operands exp) (cddr exp))
 
