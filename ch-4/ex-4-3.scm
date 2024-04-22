@@ -14,6 +14,23 @@
         ((string? exp) true)
         (else false)))
 
+(define (true? x) (not (eq? x false))) 
+(define (false? x) (eq? x false))
+
+(define (if-predicate exp) (cadr exp)) 
+(define (if-consequent exp) (caddr exp)) 
+(define (if-alternative exp)
+    (if (not (null? (cdddr exp))) 
+      (cadddr exp)
+      'false))
+
+(define (eval-if exp env)
+(if (true? (eval (if-predicate exp) env))
+      (eval (if-consequent exp) env)
+      (eval (if-alternative exp) env)))
+
+
+
 (define (eval exp env)
     (cond ((self-evaluating? exp) exp)
           ((variable? exp) (lookup-variable-value exp env))
@@ -93,18 +110,6 @@
     'done)
 
 (define (install-if-package)
-
-(define (if-predicate exp) (cadr exp)) 
-(define (if-consequent exp) (caddr exp)) 
-(define (if-alternative exp)
-    (if (not (null? (cdddr exp))) 
-      (cadddr exp)
-      'false))
-
-(define (eval-if exp env)
-(if (true? (eval (if-predicate exp) env))
-      (eval (if-consequent exp) env)
-      (eval (if-alternative exp) env)))
 
 ((table 'insert-proc!) 
     (list 'if) 

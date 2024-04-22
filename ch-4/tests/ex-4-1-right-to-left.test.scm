@@ -1,4 +1,3 @@
-
 (load "test-manager/load.scm")
 (load "ch-4/ex-4-1-right-to-left.scm")
 
