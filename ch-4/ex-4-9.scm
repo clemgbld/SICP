@@ -20,7 +20,7 @@
 
 (define (while->combination exp)
     (list (make-lambda 
-        (list ) 
+        '() 
         (make-begin 
             (list (make-define 
             '(iter) 
