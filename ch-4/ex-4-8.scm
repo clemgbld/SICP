@@ -24,7 +24,8 @@
                             (let-named-var exp) 
                             (let-named-vars exp)) 
                         (named-let-body exp))
-                  (call-proc (let-named-var exp) (let-named-exps exp))))
+                  (call-proc (let-named-var exp) 
+                             (let-named-exps exp))))
         (list (make-lambda 
             (let-vars exp) 
             (let-body exp)) 
