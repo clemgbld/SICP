@@ -16,7 +16,7 @@
     (cadr exp))
 
 (define (while-action exp)
-    (caddr exp))
+    (cddr exp))
 
 (define (while->combination exp)
     (list (make-lambda 
@@ -34,8 +34,8 @@
 ;      (define sum 0)
 ;      (while 
 ;      (not (null? nums)) 
-;      ((set! sum (+ sum (car nums)))
-;       (set! nums (cdr nums))))
+;      (set! sum (+ sum (car nums)))
+;       (set! nums (cdr nums)))
 ;       sum)
 
 (define (install-while-package)
@@ -49,12 +49,15 @@
     
     'done)
 
+
+
 ; for usage:
 ; (define (sum n)
 ;     (define sum 0)
 ;     (for 
 ;         (i 1) 
 ;         (<= i n) 
-;         ((set! sum (+ sum i)))))
+;         (+ i 1)
+;         (set! sum (+ sum i))))
 
 (install-while-package)
