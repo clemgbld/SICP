@@ -49,15 +49,51 @@
     
     'done)
 
+(define (for-initializer exp) (cadr exp))
 
+(define (for-predicate exp) (caddr exp))
+
+(define (for-actions exp) (cddddr exp))
+
+(define (for-incrementer exp) (cadddr exp))
+
+(define (for->combination exp)
+    (list (make-lambda 
+        '() 
+        (make-begin 
+            (list 
+                (for-initializer exp)
+                (make-define 
+                    '(iter) 
+                    (make-cond 
+                        (make-cond-clause 
+                            (for-predicate exp) 
+                            (append 
+                                (for-actions exp) 
+                                (list 
+                                    (for-incrementer exp)
+                                    '(iter)))))) 
+                                    '(iter))))))
+
+(define (install-for-package)
+
+(define (eval-for exp env)
+    (eval (for->combination exp) env))
+
+((table 'insert-proc!) 
+    (list 'for) 
+    eval-for)
+    
+    'done)
 
 ; for usage:
 ; (define (sum n)
 ;     (define sum 0)
 ;     (for 
-;         (i 1) 
+;         (define i 1) 
 ;         (<= i n) 
-;         (+ i 1)
+;         (set! i (+ i 1))
 ;         (set! sum (+ sum i))))
 
 (install-while-package)
+(install-for-package)
