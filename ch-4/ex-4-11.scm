@@ -1,9 +1,5 @@
 (define (make-frame variables values)
-    (if (null? variables) 
-        '()
-        (cons 
-            (cons (car variables) (car values)) 
-            (make-frame (cdr variables) (cdr values)))))
+    (map cons variables values))
 
 (define (first-frame env) (car env))
 (define (enclosing-environment env) (cdr env))
