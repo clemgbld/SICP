@@ -26,6 +26,30 @@
 (check (= 3 (lookup-variable-value 'c (cons '((b . 1) (a . 2)) (cons '((c . 3)) '())))) "should find the expected value")
 )
 
+(define-each-test
+(let ((env (cons (make-frame '(a) '(1)) '())))
+    (set-variable-value! 'a 2 env)
+    (check (equal? (cons '((a . 2)) '()) env)) "should be a able to set a variable on one level")
+
+(let ((env (cons (make-frame '(a) '(1)) (cons (make-frame '(z b c) '(5 6 8)) '()))))
+    (set-variable-value! 'b 10 env)
+    (check (equal? (cons '((a . 1)) (cons '((z . 5) (b . 10) (c . 8)) '())) env)) "should be a able to set a variable on multiple level")
+)
+
+(define-each-test
+(let ((env (cons '() '())))
+    (define-variable! 'a 2 env)
+    (check (equal? (cons '((a . 2)) '()) env)) "should be able to define a variable on one level")
+
+ (let ((env (cons (make-frame '(a) '(1)) '())))
+     (define-variable! 'a 10 env)
+     (check (equal? (cons '((a . 10)) '()) env)) "should redefine values that are already defined")
+
+(let ((env (cons (make-frame '(a b) '(1 2)) '())))
+     (define-variable! 'b 10 env)
+     (check (equal? (cons '((a . 1) (b . 10)) '()) env)) "should redefine values that are alredy defined")
+)
+
 
 
 

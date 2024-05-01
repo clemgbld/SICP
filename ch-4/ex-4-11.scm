@@ -18,23 +18,16 @@
           (error "Too many arguments supplied" vars vals)
           (error "Too few arguments supplied" vars vals))))
 
-(define (frame-variables frame)
-    (map car frame))
-
-
-(define (frame-values frame)
-    (map cdr frame))
-
 (define (lookup-variable-value var env) 
     (define (env-loop env)
-    (define (scan vars vals) (cond ((null? vars)
+    (define (scan frame) 
+        (cond ((null? frame)
         (env-loop (enclosing-environment env))) 
-        ((eq? var (car vars)) (car vals))
-        (else (scan (cdr vars) (cdr vals)))))
+        ((eq? var (caar frame)) (cdar frame))
+        (else (scan (cdr frame)))))
     (if (eq? env the-empty-environment)
      (error "Unbound variable" var) (let ((frame (first-frame env)))
-          (scan (frame-variables frame)
-                (frame-values frame)))))
+          (scan frame))))
   (env-loop env))
 
 (define (set-variable-value! var val env) 
@@ -53,7 +46,8 @@
 (define (define-variable! var val env)
  (let ((frame (first-frame env)))
     (define (scan frame)
-    (cond ((null? frame) (add-binding-to-frame! var val frame))
+    (cond ((null? frame) 
+        (set-car! env (list (cons var val))))
     ((eq? var (caar frame)) (set-cdr! (car frame) val)) 
     (else (scan (cdr frame)))))
     (scan frame)))
