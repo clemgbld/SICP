@@ -39,28 +39,25 @@
 
 (define (set-variable-value! var val env) 
     (define (env-loop env)
-    (define (scan vars vals) 
-    (cond ((null? vars)
+    (define (scan frame) 
+    (cond ((null? frame)
 (env-loop (enclosing-environment env))) 
-    ((eq? var (car vars)) (set-car! vals val)) 
-    (else (scan (cdr vars) (cdr vals)))))
+    ((eq? var (caar frame)) (set-cdr! (car frame) val)) 
+    (else (scan (cdr frame)))))
 (if (eq? env the-empty-environment) 
     (error "Unbound variable: SET!" var) 
     (let ((frame (first-frame env)))
-          (scan (frame-variables frame)
-                (frame-values frame)))))
+          (scan frame))))
   (env-loop env))
 
 (define (define-variable! var val env)
  (let ((frame (first-frame env)))
-(define (scan vars vals)
- (cond ((null? vars)
-(add-binding-to-frame! var val frame))
- ((eq? var (car vars)) (set-car! vals val))
-  (else (scan (cdr vars) (cdr vals)))))
-    (scan (frame-variables frame) (frame-values frame))))
+    (define (scan frame)
+    (cond ((null? frame) (add-binding-to-frame! var val frame))
+    ((eq? var (caar frame)) (set-cdr! (car frame) val)) 
+    (else (scan (cdr frame)))))
+    (scan frame)))
 
-; we just need to change the selector and constructor as well as the modifier of the frame data structure
-; and the other procedure can stay untouched
+
 
 
