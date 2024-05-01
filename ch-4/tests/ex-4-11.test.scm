@@ -23,6 +23,7 @@
 (check (= 1 (lookup-variable-value 'a (cons '((a . 1)) '()))) "should find the expected value")
 (check (= 2 (lookup-variable-value 'a (cons '((a . 2)) '()))) "should find the expected value")
 (check (= 2 (lookup-variable-value 'a (cons '((b . 1) (a . 2)) '()))) "should find the expected value")
+(check (= 3 (lookup-variable-value 'c (cons '((b . 1) (a . 2)) (cons '((c . 3)) '())))) "should find the expected value")
 )
 
 
