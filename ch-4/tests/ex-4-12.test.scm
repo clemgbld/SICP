@@ -1,5 +1,5 @@
 (load "test-manager/load.scm")
-(load "ch-4/ex-4-11.scm")
+(load "ch-4/ex-4-12.scm")
 
 
 
@@ -8,6 +8,7 @@
 (check (equal? (list (cons 'x 1)) (make-frame '(x) '(1))) "should be a frame of 1 element")
 (check (equal? (list (cons 'x 1) (cons 'y 2) (cons 'z 3)) (make-frame '(x y z) '(1 2 3))) "should be a frame of multiple elements")
 )
+
 
 (define-each-test
 (check (equal? (cons '((a . 1) (b . 2)) (cons '((x . 3)) '())) (extend-environment '(a b) '(1 2) (cons (make-frame '(x) '(3)) '()))) "should extend the environement")
