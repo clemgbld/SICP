@@ -23,3 +23,25 @@
           (scan (frame-variables frame)
                 (frame-values frame)))))
     (env-loop env))
+
+(define (define-name exp) 
+    (if (symbol? (cadr exp) ) 
+        (cadr exp) 
+        (caadr exp)))
+
+(define (define-body exp)
+    (if (symbol? (cadr exp))
+        (caddr exp)
+        (list 'lambda (cdadr exp) (caddr exp))))
+
+(define (tagged-list? exp tag) (if (pair? exp)
+            (eq? (car exp) tag)
+            false))
+
+(define (scan-out-defines body)
+    (let ((first-exp (car body)))
+        (if  (tagged-list? first-exp 'define) 
+         (list 'let (list (list (define-name first-exp) '*unassigned*)) 
+          (list 'set! (define-name first-exp) (define-body first-exp)) 
+            (cadr body))   
+            body)))
