@@ -24,6 +24,8 @@
                 (frame-values frame)))))
     (env-loop env))
 
+;b 
+
 (define (define-name exp) 
     (if (symbol? (cadr exp) ) 
         (cadr exp) 
@@ -38,10 +40,32 @@
             (eq? (car exp) tag)
             false))
 
+(define (make-assginment var val)
+    (list 'set! var val))
+
+(define (make-define-assignment exp)
+    (make-assginment (define-name exp) (define-body exp)))
+
+(define (make-unassigned-define exp)
+    (list (define-name exp) '*unassigned*))
+
+(define (make-let vars  body)
+    (cons 'let (cons vars body)))
+
 (define (scan-out-defines body)
-    (let ((first-exp (car body)))
-        (if  (tagged-list? first-exp 'define) 
-         (list 'let (list (list (define-name first-exp) '*unassigned*)) 
-          (list 'set! (define-name first-exp) (define-body first-exp)) 
-            (cadr body))   
+    (let ((defines 
+        (filter (lambda (x) (tagged-list? x 'define)) body)))
+        (if (not (null? defines)) 
+         (make-let (map make-unassigned-define defines) 
+         (append (map make-define-assignment defines) 
+            (filter (lambda (x) (not (tagged-list? x 'define))) body)))   
             body)))
+
+;c
+ ; c  
+ ; make-procedure is better because we can easily explore other transformations 
+ ; along with the fact of repeated calculation everytime when procedure-body is accessed 
+
+
+ (define (make-procedure parameters body env) 
+     (list 'procedure parameters (scan-out-defines body) env)) 

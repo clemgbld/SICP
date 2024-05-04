@@ -9,6 +9,7 @@
 (check (equal? '(let ((y *unassigned*)) (set! y 2) (+ y y)) (scan-out-defines '((define y 2) (+ y y)) )) "should scan out a define")
 (check (equal? '(let ((double *unassigned*)) (set! double (lambda (x) (* 2 x))) (double y)) (scan-out-defines '((define (double x) (* 2 x)) (double y)) )) "should scan out a define and transform define body into a lambda")
 (check (equal? '(let ((square *unassigned*)) (set! square (lambda (x) (* x x))) (square y)) (scan-out-defines '((define (square x) (* x x)) (square y)) )) "should scan out a define and transform define body into a lambda")
+(check (equal? '(let ((u *unassigned*) (v *unassigned*)) (set! u 1) (set! v 2) (+ v u)) (scan-out-defines '((define u 1) (define v 2) (+ v u)))) "should be able to scan out multiple defines")
 )
 
 
