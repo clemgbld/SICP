@@ -1,0 +1,14 @@
+a - I support the point of view of Eva like the author of the book said in the foot note
+the point of view of Ben Bitdidlle produce an incorrect error thus it is better to
+generate an error or achieve a simulatanous definition but achieve that can be not worth it because it is expensive
+
+b - Maybe we can sort the define by order of which define use which , with the exemple of the exercise
+
+(define a 5)
+and then
+(define b (+ a x))
+
+which will re-define a thus leading to the correct result
+
+if there is define that use each other we leave them as they are and
+generate an error in case we run into the edge case presented in the exercise
