@@ -2,7 +2,7 @@ we need to force the operator whenever it's a thunk
 
 an exemple would be:
 
-(define w (id (id 10))) from exercise 10
+(define w (id (id 10))) from exercise 27 
 
 the first id procedure is applied as a compound procedure so its operands (id 10) are delayed
 
