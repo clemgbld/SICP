@@ -6,7 +6,7 @@
 ;;; L-Eval input:
 ;count
 ;;; L-Eval value: 
-;1 (id 10) because id 10 has been called 
+;1 (id 10) because id 10 has been called and + is a primitive procedure so it is strict that is why we still got 1 for count and not 2 because id is a coumpound procedure
 ;;; L-Eval input:
 ;w
 ;;; L-Eval value:
