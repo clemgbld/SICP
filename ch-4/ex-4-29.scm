@@ -15,6 +15,7 @@
 
 ; this program will run much slower without memoization because it will recompute the fib operation (which is really expensive ) n number of times instead of one time 
 
+;b)
 
 (define count 0)
 
