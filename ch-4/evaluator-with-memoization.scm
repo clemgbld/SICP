@@ -59,10 +59,11 @@ env))))
       (eval (if-alternative exp) env)))
 
 
-(define (eval-sequence exps env) (cond ((last-exp? exps)
+(define (eval-sequence exps env) 
+      (cond ((last-exp? exps)
          (eval (first-exp exps) env))
-         (else
-(eval (first-exp exps) env) (eval-sequence (rest-exps exps) env))))
+         (else (eval (first-exp exps) env) 
+            (eval-sequence (rest-exps exps) env))))
 
 (define (eval-assignment exp env) (set-variable-value! (assignment-variable exp)
                        (eval (assignment-value exp) env)
@@ -205,7 +206,7 @@ env))))
 (define (primitive-implementation proc) (cadr proc))
 
 (define primitive-procedures (list (list 'car car) (list 'cdr cdr)
-(list 'cons cons) (list 'null? null?) (list '+ +) (list '* *) (list '= =) (list '- -)))
+(list 'cons cons) (list 'null? null?) (list '+ +) (list '* *) (list '= =) (list '- -) (list 'list list) (list 'display display) (list 'newline newline)))
 (define (primitive-procedure-names) (map car primitive-procedures))
 (define (primitive-procedure-objects)
 (map (lambda (proc) (list 'primitive (cadr proc)))
