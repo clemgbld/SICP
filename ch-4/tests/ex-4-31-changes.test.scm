@@ -2,11 +2,16 @@
 (load "ch-4/ex-4-31-changes.scm")
 
 (define-each-test
-(check (= 5 (definition-value '(define a 5))) "should define a simple value")
-(check (= 7 (definition-value '(define b 7))) "should define a simple value")
-(check (equal? '(lambda (a b) (+ a b)) (definition-value '(define (add a b) (+ a b)))) "should define a simple lambda")
-(check (equal? '(lambda (b a) (- b a)) (definition-value '(define (add b a) (- b a)))) "should define a simple lambda")
+(check (equal? '(a b c) (procedure-parameters (cons 'lambda (cons '(a b c) '(+ a b c))))) "should take normal parameters")
+(check (equal? '(a b c) (procedure-parameters (cons 'lambda (cons '(a (b lazy-memo) (c lazy)) '(+ a b c))))) "should take normal parameters and map lazy one to normal params too")
 )
+
+(define-each-test
+(check (equal? (list 'thunk '(+ 1 2) '()) (delay-it '(+ 1 2) '(a lazy) '())) "should delay normal thunk")
+(check (equal? (list 'thunk-memo '(+ 1 3) '('())) (delay-it '(+ 1 3) '(a lazy-memo) '('()))) "should delay memo thunk")
+)
+
+
 
 
 

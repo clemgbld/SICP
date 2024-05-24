@@ -28,4 +28,4 @@
 ;;; L-Eval input:
 count
 ;;; L-Eval value:
-; count 1 for memoize evaluator and count 2 for memoized evaluator
+; count 1 for memoize evaluator and count 2 for not memoized evaluator

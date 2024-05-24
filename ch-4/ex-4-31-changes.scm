@@ -1,8 +1,12 @@
-(define (definition-value exp)
-(if (symbol? (cadr exp)) (caddr exp)
-      (make-lambda (cdadr exp)
-                   (cddr exp))))
+(define (procedure-parameters exp)
+    (map (lambda (p) 
+        (if (pair? p) 
+            (car p) 
+                p)) 
+        (cadr exp)))
 
 
-(define (make-lambda parameters body) 
-    (cons 'lambda (cons parameters body)))
+(define (delay-it exp param env)
+    (cond ((eq? 'lazy-memo (cadr param) ) (list 'thunk-memo exp env))
+        ((eq? 'lazy (cadr param)) (list 'thunk exp env))
+        (else (error "wrong syntax to lazy evaluate param" param))))
