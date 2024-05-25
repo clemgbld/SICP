@@ -1,0 +1,37 @@
+- The car of the data-structure is also delayed in the lazy evaluator version
+
+cons-stream version:
+(define x (cons-stream (fib 15) (scale-stream x 10)))
+
+lazy-cons version:
+(define x (cons (fib 15) (scale-list x 10)))
+
+in this example the (fib 15 ) computation has been computed for the cons-stream version but not for the lazy cons version.
+
+- And as explained in the book no need for any explicit force and delay for the lazy-cons version unlike the cons-stream verison. 
+
+cons-stream version:
+
+(define (integral integrand initial-value dt)
+    (define int 
+        (cons-stream initial-value 
+            (add-streams (scale-stream (force integrand) dt) int))))
+
+(define (solve f y0 dt)
+    (define y (integral (delay dy) y0 dt))
+    (define dy (map-stream f y))
+    y)
+
+lazy cons version:
+
+(define (integral integrand initial-value dt)
+    (define int 
+        (cons-stream initial-value 
+            (add-streams (scale-stream  integrand dt) int))))
+
+(define (solve f y0 dt)
+    (define y (integral  dy y0 dt))
+    (define dy (map-stream f y))
+    y)
+
+- no need to reimplement special procedure to deal with stream like map-stream, filter-stream etc... the original map and filter procedure work out of the box on lazy cons 
