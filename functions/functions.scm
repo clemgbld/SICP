@@ -114,3 +114,14 @@
 
 (define (negate x)
   (* - 1 x))
+
+(define (permutations items)
+  (if (null? items) '(())
+      (apply append
+             (map (lambda (element)
+            (map (lambda (permutation)
+               (cons element permutation))
+             (permutations 
+             (filter (lambda (i) 
+                (not (= i element))) items))))
+          items))))

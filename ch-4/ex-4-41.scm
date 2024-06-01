@@ -4,19 +4,8 @@
     (map (lambda (floors)
         (map list '(baker cooper fletcher miller smith) floors)) 
         (filter 
-            is-multiple-dwelling-valid 
+            is-multiple-dwelling-valid?
             (permutations (enumerate-interval 1 5)))))
-
-(define (permutations items)
-  (if (null? items) '(())
-      (apply append
-             (map (lambda (element)
-            (map (lambda (permutation)
-               (cons element permutation))
-             (permutations 
-             (filter (lambda (i) 
-                (not (= i element))) items))))
-          items))))
   
 (define (is-multiple-dwelling-valid? floors)
     (let ((baker (list-ref floors 0))
