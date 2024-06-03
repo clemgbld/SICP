@@ -16,8 +16,8 @@
             positions))
 
 (define (list->amb l)
-    (if (null? l) 
-        '()
+    (if (null? (cdr l)) 
+        (car l) 
         (amb (car l) (cdr l))))
 
 (define (build-queens k)
