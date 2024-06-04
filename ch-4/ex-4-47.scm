@@ -19,6 +19,4 @@
 ;an infinite loop to occur because if the (parse-prepositonal-phase) doesn't succeed and the (parse-verb-phrase) before it succed 
 ;the program try to call (parse-verb-phrase) indefinetly
 
-;and if the program evaluate from right to left it won't work either because
-;(parse-prepositional-phrase) will be called before (parse-verb-phrase)
 
