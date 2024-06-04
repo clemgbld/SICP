@@ -1,4 +1,4 @@
-our parser wouldn't work because we need to read the sentence left to right (like in real life) in order to generate the different combination possible
+our parser wouldn't work because we need to read the sentence left to right (like in real grammar rules) in order to generate the different combination possible
 
 (parse '(the student with the cat sleeps in the class))
 
