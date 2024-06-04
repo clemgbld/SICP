@@ -1,0 +1,5 @@
+our parser wouldn't work because we need to read the sentence left to right (like in real life) in order to generate the different combination possible
+
+(parse '(the student with the cat sleeps in the class))
+
+for this sentence we can't parse it by starting from right we need to reverse it if the evaluator evaluate the operands from right to left 
