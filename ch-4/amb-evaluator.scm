@@ -29,7 +29,6 @@
 (load "ch-4/mceval.scm")
 
 
-
 ;;;Code from SECTION 4.3.3, modified as needed to run it
 
 (define (amb? exp) (tagged-list? exp 'amb))
@@ -275,6 +274,8 @@
         (list 'memq memq)
         (list 'member member)
         (list 'not not)
+        (list '/ /)
+        (list 'equal? equal?)
         (list '+ +)
         (list '- -)
         (list '* *)
@@ -289,6 +290,32 @@
         (list 'eq? eq?)
 ;;      more primitives
         ))
+(define the-global-environment (setup-environment))
+(driver-loop)
 
+(define (map func lst)
+  (if (null? lst)
+      '()
+      (cons (func (car lst))
+            (map func (cdr lst)))))
+
+(define (for-each func lst)
+  (if (null? lst)
+      true 
+      (begin
+        (func (car lst))
+        (for-each func (cdr lst)))))
+
+(define (remove predicate lst)
+  (cond
+    ((null? lst) '())
+    ((predicate (car lst)) (remove predicate (cdr lst)))
+    (else (cons (car lst) (remove predicate (cdr lst))))))
+
+
+(define (enumerate-interval low high) 
+    (if (> low high)
+        '()
+            (cons low (enumerate-interval (+ low 1) high))))
 
 'AMB-EVALUATOR-LOADED
