@@ -371,8 +371,6 @@
 (define (a-rand-integer-starting-from n)
 (ramb n (a-rand-integer-starting-from (+ n 1))))
 
-
-
 (define nouns '(noun student professor cat class)) 
 (define verbs '(verb studies lectures eats sleeps)) 
 (define articles '(article the a))
