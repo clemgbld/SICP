@@ -1,0 +1,6 @@
+- Ben realized that his accumulation won't work properly because
+of the duplicated result that can come out of the query which can cause
+wrong result because the accumulation prodedure may accumulate the same result multiple time
+
+- One methode he can use to solve his problem is to first transform the stream of record into a set like data structure
+who remove duplicate base on an equality procedure who can tell if two record are equal or not
