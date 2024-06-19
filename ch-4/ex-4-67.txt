@@ -1,0 +1,7 @@
+- As described in the book we can keep an history of frame and pattern 
+
+where map the pattern variable to a value 
+
+{ a=some-value, b=some-value}
+
+and for the check we can raise an error if an element who is alreay in the history is added to the history 
