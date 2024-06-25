@@ -1,0 +1,7 @@
+we have to use the let binding to copy the assertion in another address in memory to avoid set THE-ASSERTIONS to an infinite stream composed of the assertion that we want to add to it 
+
+for exemple if we add a rule (rule (append () y)) we the exercise definition would be an infinite stream of:
+
+(cons-stream (rule (append () y) (cons-stream (rule (append () y) ) ...)))
+
+because the stream THE-ASSERTIONS will point to itself
