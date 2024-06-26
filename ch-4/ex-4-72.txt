@@ -1,0 +1,2 @@
+like explained in chapter 3 if we don't interleave two stream where the first one is infinite we will never see any result from the second stream display on the stream
+
