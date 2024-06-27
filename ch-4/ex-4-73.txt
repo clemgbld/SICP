@@ -1,0 +1,1 @@
+like in ex 71 it for postponing infinite loop and display the result of infinite stream
