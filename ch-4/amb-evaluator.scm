@@ -49,12 +49,23 @@
         ((cond? exp) (analyze (cond->if exp)))
         ((let? exp) (analyze (let->combination exp))) ;**
         ((amb? exp) (analyze-amb exp))                ;**
+        ((require-fail? exp) (analyze-require-fail exp))
         ((application? exp) (analyze-application exp))
         (else
          (error "Unknown expression type -- ANALYZE" exp))))
 
 (define (ambeval exp env succeed fail)
   ((analyze exp) env succeed fail))
+
+(define (require-fail? exp) (tagged-list? exp 'require-fail))
+(define (require-fail-exp exp) (cadr exp))
+
+(define (analyze-require-fail exp)
+    (let ((proc (analyze (require-fail-exp exp))))
+        (lambda (env succeed fail)
+            (proc env
+                  (lambda (value fail2) (fail))
+                  (lambda () (succeed 'ok fail))))))
 
 ;;;Simple expressions
 
@@ -291,7 +302,6 @@
 ;;      more primitives
         ))
 (define the-global-environment (setup-environment))
-(driver-loop)
 
 (define (map func lst)
   (if (null? lst)
