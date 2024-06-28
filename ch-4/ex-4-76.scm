@@ -76,13 +76,6 @@
 ;;;Compound queries
 
 (define (conjoin conjuncts frame-stream)
-  (if (empty-conjunction? conjuncts)
-      frame-stream
-      (conjoin (rest-conjuncts conjuncts)
-               (qeval (first-conjunct conjuncts)
-                      frame-stream))))
-
-(define (conjoin conjuncts frame-stream)
     (define iter (conjuncts merged-stream)
         (if (empty-conjunction? conjuncts)
             merged-stream
