@@ -5,7 +5,7 @@
               (+ counter 1))))
 (iter 1 1))
 
-(countroller 
+(controller 
 (assign p (const 1))
 (assign c (const 1))
 test-counter
