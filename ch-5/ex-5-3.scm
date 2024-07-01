@@ -54,7 +54,8 @@
     (assign x (op (read)))
     test-guess
     ;improve
-    (assign s (op square ) (reg guess))
+    ;square
+    (assign s (op * ) (reg guess) (reg guess))
     (assign s (op -) (reg s) (reg x))
     ;abs
     (test (op >) (reg s) (const -1))
