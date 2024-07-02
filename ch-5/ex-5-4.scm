@@ -25,7 +25,7 @@
   expt-done)
 
 ;b) Iterative exponentiation
-;
+
 (define (expt b n)
   (define (expt-iter product counter)
     (if (= counter 0)
