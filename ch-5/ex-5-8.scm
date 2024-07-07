@@ -20,8 +20,6 @@ there
   )
 
 ; the content of the register a will be 3 because assoc take the first occurence in a the list
-;
-; 
 (define (extract-labels text receive) 
   (if (null? text)
       (receive '() '())
@@ -40,8 +38,6 @@ there
                               insts)
                         labels)))))))
 
-;
-;
 
   
 
