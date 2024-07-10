@@ -31,5 +31,22 @@ immediate-answer
 fib-done)))
 
 
+;b
+
+(define (make-save inst machine stack pc)
+  (let* ((reg-name (stack-inst-reg-name inst)) 
+         (reg (get-register machine reg-name)))
+    (lambda ()
+      (push stack (cons reg-name (get-contents reg)))
+      (advance-pc pc))))
 
 
+(define (make-restore inst machine stack pc)
+  (let* ((reg-name (stack-inst-reg-name inst)) 
+         (reg (get-register machine reg-name)))
+    (lambda ()
+      (let ((result (pop stack)))
+       (if (eq? (car result) reg-name) 
+         (begin (set-contents! reg (cdr result) )    
+          (advance-pc pc))
+       (error "the value is not from the register:" reg-name ))))))
