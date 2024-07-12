@@ -5,7 +5,7 @@
 
 (define fib-machine 
   (make-machine '(n continue val) 
-  (list (list '+ +) (list '- -) (list '< <) (list 'display (lambda (x) (display x) (newline))) )
+  (list (list '+ +) (list '- -) (list '< <) )
 '((assign continue (label fib-done))
 fib-loop
 (test (op <) (reg n) (const 2))
