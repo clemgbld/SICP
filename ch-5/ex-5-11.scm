@@ -1,10 +1,11 @@
 (load "ch-5/ch5-regsim.scm")
 
+
 ;a 
 
 (define fib-machine 
   (make-machine '(n continue val) 
-  (list (list '+ +) (list '- -) (list '< <) )
+  (list (list '+ +) (list '- -) (list '< <) (list 'display (lambda (x) (display x) (newline))) )
 '((assign continue (label fib-done))
 fib-loop
 (test (op <) (reg n) (const 2))
@@ -53,10 +54,32 @@ fib-done)))
 
 ;c
 
+
+(define (make-register name)
+  (let ((contents '*unassigned*) (stack (make-stack)))
+    (define (dispatch message)
+      (cond ((eq? message 'get) contents)
+            ((eq? message 'set)
+             (lambda (value) (set! contents value)))
+            ((eq? message 'stack) stack)
+            (else
+             (error "Unknown request -- REGISTER" message))))
+    dispatch))
+
+(define (make-machine register-names ops controller-text)
+  (let ((machine (make-new-machine)))
+    (for-each (lambda (register-name)
+                ((machine 'allocate-register) register-name))
+              register-names)
+    ((machine 'install-operations) ops)    
+    ((machine 'install-instruction-sequence)
+     (assemble controller-text machine))
+    machine))
+
+
 (define (update-insts! insts labels machine)
   (let ((pc (get-register machine 'pc))
         (flag (get-register machine 'flag))
-        (stacks (machine 'stacks))
         (ops (machine 'operations)))
     (for-each
      (lambda (inst)
@@ -64,11 +87,11 @@ fib-done)))
         inst
         (make-execution-procedure
          (instruction-text inst) labels machine
-         pc flag stacks ops)))
+         pc flag ops)))
      insts)))
 
 (define (make-execution-procedure inst labels machine
-                                  pc flag stacks ops)
+                                  pc flag  ops)
   (cond ((eq? (car inst) 'assign)
          (make-assign inst machine labels ops pc))
         ((eq? (car inst) 'test)
@@ -78,9 +101,9 @@ fib-done)))
         ((eq? (car inst) 'goto)
          (make-goto inst machine labels pc))
         ((eq? (car inst) 'save)
-         (make-save inst machine stacks pc))
+         (make-save inst machine  pc))
         ((eq? (car inst) 'restore)
-         (make-restore inst machine stacks pc))
+         (make-restore inst machine  pc))
         ((eq? (car inst) 'perform)
          (make-perform inst machine labels ops pc))
         (else (error "Unknown instruction type -- ASSEMBLE"
@@ -89,15 +112,13 @@ fib-done)))
 (define (make-new-machine)
   (let ((pc (make-register 'pc))
         (flag (make-register 'flag))
-        (stacks '())
         (the-instruction-sequence '()))
     (let* ((register-table
            (list (list 'pc pc) (list 'flag flag)))
            (the-ops
            (list (list 'initialize-stacks
                        (lambda () 
-                         (set! stacks (map (lambda (r) (cons (car r) (make-stack))) register-table))
-                         (for-each (lambda (stack) (stack 'initialize)) stacks)))
+                         (for-each (lambda (reg) (((cadr reg) 'stack) 'initialize)) register-table)))
                  ;;**next for monitored stack (as in section 5.2.4)
                  ;;  -- comment out if not wanted
                  (list 'print-stack-statistics
@@ -132,24 +153,26 @@ fib-done)))
               ((eq? message 'get-register) lookup-register)
               ((eq? message 'install-operations)
                (lambda (ops) (set! the-ops (append the-ops ops))))
-              ((eq? message 'stack) stack)
+              ((eq? message 'stacks) stacks)
               ((eq? message 'operations) the-ops)
               (else (error "Unknown request -- MACHINE" message))))
       dispatch)))
 
-(define (make-save inst machine stacks pc)
+(define (make-save inst machine pc)
   (let* ((reg-name (stack-inst-reg-name inst))
          (reg (get-register machine
-                           reg-name)))
-    (push (cdr (assoc reg-name stacks)) (get-contents reg))
+                           reg-name))
+         (stack (reg 'stack)))
+    (push stack (get-contents reg))
     (lambda ()
       (advance-pc pc))))
 
-(define (make-restore inst machine stack pc)
+(define (make-restore inst machine  pc)
   (let* ((reg-name (stack-inst-reg-name inst))
          (reg (get-register machine
-                           reg-name)))
+                           reg-name))
+         (stack (reg 'stack))
+         )
     (lambda ()
-      (set-contents! reg (pop (cdr (assoc reg-name stacks))))    
+      (set-contents! reg (pop stack))    
       (advance-pc pc))))
-
