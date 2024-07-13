@@ -33,7 +33,7 @@
         (let ((val (assoc name register-table)))
           (if val
               (cadr val)
-              (error "Unknown register:" name))))
+              (begin (allocate-register name) (lookup-register name) ))))
       (define (execute)
         (let ((insts (get-contents pc)))
           (if (null? insts)
@@ -46,28 +46,6 @@
 
 
 
-      (define (get-register-names controller-text)
-        (if (null? controller-text) '() (let ((first (car controller-text)))
-          (if (pair? first) 
-            (cons (map cadr (filter (lambda (c) (and (pair? c) (eq? (car c) 'reg ) ) ) first)) (get-register-names (cdr controller-text) ))
-          (get-register-names (cdr controller-text))
-          ))))
-
-
-(define (remove-duplicates l)
-        (define  (iter l without-dup)
-          (if (null? l) without-dup
-            (let ((first (car l)))
-              (iter 
-                (cdr l) 
-                (if (member first without-dup) 
-                  without-dup 
-                (append without-dup (list first))))))) 
-        (iter l '()))
-
-      (define reg-names (remove-duplicates (append (map cadr assigns) (fringe (get-register-names controller-text)))) )
-
-      (for-each (lambda (r) (allocate-register r)) reg-names)
 
 
       (define (dispatch message)
@@ -81,6 +59,6 @@
                (lambda (ops) (set! the-ops (append the-ops ops))))
               ((eq? message 'stack) stack)
               ((eq? message 'operations) the-ops)
-              ((eq? message 'reg-names) reg-names)
+              ((eq? message 'reg-names) (map car register-table ))
               (else (error "Unknown request -- MACHINE" message))))
       dispatch)))

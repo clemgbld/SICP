@@ -4,12 +4,12 @@
 (define-each-test
 (let ((machine (make-machine '() '( (assign b (const 2))(assign a (const 1)) ))))
   (start machine)
-  (check (equal? (machine 'reg-names) '(b a)) "should be able to handle simple registers")
+  (check (equal? (machine 'reg-names) '( a b pc flag)) "should be able to handle simple registers")
   )
 
 (let ((machine (make-machine (list (list '= =)) '( some-label (assign b (const 2)) (test (op =) (reg b) (const 1)) (branch (label some-label) ) (assign a (const 1)) ))))
   (start machine)
-  (check (equal? (machine 'reg-names) '(b a)) "should be able to handle simple registers")
+  (check (equal? (machine 'reg-names) '( a b pc flag)) "should be able to handle simple registers")
 
 )
 
@@ -18,7 +18,7 @@
   (set-register-contents! machine 'b 1)
   (set-register-contents! machine 'a 1)
   (start machine)
-  (check (equal? (machine 'reg-names) '(val val2 a b)) "should be able to handle simple registers")
+  (check (equal? (machine 'reg-names) '( b val2 a val  pc flag)) "should be able to handle simple registers")
 )
 
 )
