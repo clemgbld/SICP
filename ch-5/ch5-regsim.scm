@@ -40,6 +40,7 @@
   ((register 'set) value))
 
 ;;**original (unmonitored) version from section 5.2.1
+#|
 (define (make-stack)
   (let ((s '()))
     (define (push x)
@@ -66,6 +67,7 @@
 
 (define (push stack value)
   ((stack 'push) value))
+|#
 
 ;;**monitored version from section 5.2.4
 (define (make-stack)
