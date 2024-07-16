@@ -30,8 +30,6 @@
     (let ((the-ops
            (list (list 'initialize-stack
                        (lambda () (stack 'initialize)))
-                 ;;**next for monitored stack (as in section 5.2.4)
-                 ;;  -- comment out if not wanted
                  (list 'print-stack-statistics
                        (lambda () (stack 'print-statistics)))))
           (register-table
@@ -140,6 +138,55 @@
 
 (define (trace-on! machine) ((machine 'trace-on!)))
 (define (trace-off! machine) ((machine 'trace-off!)))
+
+(define (make-register name)
+  (let ((contents '*unassigned*) (is-tracing #f) )
+
+    (define (trace-on!)
+      (display (list "TRACING TURNED ON FOR REGISTER:" name) )
+      (set! is-tracing #t))
+
+(define (trace-off!)
+      (display (list "TRACING TURNED OFF FOR REGISTER:" name) )
+      (set! is-tracing #f))
+
+    (define (dispatch message)
+      (cond ((eq? message 'get) contents)
+            ((eq? message 'set)
+             (lambda (value) (if is-tracing 
+                               (begin 
+                                 (display (list "REGISTER:" name " OLD-CONTENTS:" contents  " NEW-CONTENTS:" value) ) 
+                                 (newline) 
+                                 ))  
+               (set! contents value)))
+        ((eq? message 'trace-on!) trace-on!)
+        ((eq? message 'trace-off!) trace-off!)
+            (else
+             (error "Unknown request -- REGISTER" message))))
+    dispatch))
+
+(define (get-contents register)
+  (register 'get))
+
+(define (set-contents! register value)
+  ((register 'set) value))
+
+
+(define (get-register-contents machine register-name)
+  (get-contents (get-register machine register-name)))
+
+(define (set-register-contents! machine register-name value)
+  (set-contents! (get-register machine register-name) value)
+  'done)
+
+(define (trace-on-register! machine register-name)
+ (((get-register machine register-name) 'trace-on!)))
+
+(define (trace-off-register! machine register-name)
+ (((get-register machine register-name) 'trace-off!)))
+
+(define (get-register machine reg-name)
+  ((machine 'get-register) reg-name))
 
 (define rec-expt-machine 
   (make-machine 

@@ -51,12 +51,12 @@
       (define (print-instruction-count)
         (display (list "INSTRUCTION COUNT=" instruction-count ) ))
 
-      (define (trace-on)
+      (define (trace-on!)
         (set! is-tracing #t)
         (display "TRACING TURNED ON" ))
 
 
-      (define (trace-off)
+      (define (trace-off!)
         (set! is-tracing #f)
         (display "TRACING TURNED OFF" ))
 
@@ -76,8 +76,8 @@
               ((eq? message 'operations) the-ops)
               ((eq? message 'reset-instruction-count) reset-instruction-count)
               ((eq? message 'print-instruction-count) print-instruction-count)
-              ((eq? message 'trace-on) trace-on)
-              ((eq? message 'trace-off) trace-off)
+              ((eq? message 'trace-on!) trace-on!)
+              ((eq? message 'trace-off!) trace-off!)
               (else (error "Unknown request -- MACHINE" message))))
       dispatch)))
 
@@ -85,8 +85,8 @@
 
 (define (print-instruction-count machine) ((machine 'print-instruction-count)))
 
-(define (trace-on machine) ((machine 'trace-on)))
-(define (trace-off machine) ((machine 'trace-off)))
+(define (trace-on! machine) ((machine 'trace-on!)))
+(define (trace-off! machine) ((machine 'trace-off!)))
 
 (define iter-expt-machine 
   (make-machine 
