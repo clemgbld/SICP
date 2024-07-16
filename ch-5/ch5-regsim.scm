@@ -61,12 +61,6 @@
             (else (error "Unknown request -- STACK"
                          message))))
     dispatch))
-
-(define (pop stack)
-  (stack 'pop))
-
-(define (push stack value)
-  ((stack 'push) value))
 |#
 
 ;;**monitored version from section 5.2.4
@@ -106,6 +100,12 @@
             (else
              (error "Unknown request -- STACK" message))))
     dispatch))
+
+(define (pop stack)
+  (stack 'pop))
+
+(define (push stack value)
+  ((stack 'push) value))
 
 (define (make-new-machine)
   (let ((pc (make-register 'pc))
