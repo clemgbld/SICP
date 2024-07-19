@@ -1,4 +1,5 @@
 (load "ch-5/ch5-regsim.scm")
+(load "ch-3/ex-3-25.scm")
 
 (define (get-first-label controller-text) 
   (if (null? controller-text) 
@@ -25,8 +26,12 @@
         (stack (make-stack))
         (the-instruction-sequence '())
         (instruction-count 0)
+        (label-count 0)
         (is-tracing #f)
-        (current-label first-label))
+        (current-label first-label)
+        (breakpoints '())
+        (from-breakpoint #f)
+        )
     (let ((the-ops
            (list (list 'initialize-stack
                        (lambda () (stack 'initialize)))
@@ -47,20 +52,33 @@
               (cadr val)
               (error "Unknown register:" name))))
 
+      (define (breakpoint?)
+        (member (list current-label label-count) breakpoints ))
+
+
+
       (define (execute)
         (let ((insts (get-contents pc)))
           (if (null? insts)
               'done
               (begin
-                (if is-tracing 
+                (if (not from-breakpoint) (set! label-count (+ label-count 1)))
+                (if (and (breakpoint?) (not from-breakpoint ) )  
+                  (set! from-breakpoint #t) 
+                  (begin 
+                  (if is-tracing 
                   (begin 
                     (display (list "LABEL PRECEDING THE INSTRUCTION:" current-label) )
                     (newline)
                     (display (caar insts))
                     (newline)))
+                (set! from-breakpoint #f) 
                 ((instruction-execution-proc (car insts)))
                 (set! instruction-count (+ instruction-count 1))
-                (execute)))))
+                (execute)))))))
+
+      (define (reset-label-count) 
+          (set! label-count 0))
 
 
       (define (reset-instruction-count) 
@@ -80,7 +98,20 @@
         (set! is-tracing #f)
         (display "TRACING TURNED OFF" ))
 
-      (define (set-label! label)(set! current-label label))
+      (define (set-breakpoint label n)
+        (set! breakpoints (cons (list label n) breakpoints ) )
+        )
+
+      (define (set-label! label)
+        (set! current-label label))
+
+      (define (cancel-breakpoint label n )
+        (let ((target (list label n) ))
+          (set! 
+            breakpoints 
+            (filter 
+              (lambda (b) (not (equal? b target)))
+              breakpoints) )))
 
       (define (dispatch message)
         (cond ((eq? message 'start)
@@ -100,8 +131,25 @@
               ((eq? message 'trace-on!) trace-on!)
               ((eq? message 'trace-off!) trace-off!)
               ((eq? message 'set-label!) set-label!)
+              ((eq? message 'set-breakpoint) set-breakpoint)
+              ((eq? message 'cancel-breakpoint) cancel-breakpoint)
+              ((eq? message 'proceed-machine) (lambda () (execute)) )
+              ((eq? message 'cancel-all-breakpoints) (lambda () (set! breakpoints '())))
+              ((eq? message 'reset-label-count) reset-label-count)
               (else (error "Unknown request -- MACHINE" message))))
       dispatch)))
+
+(define (proceed-machine machine) ((machine 'proceed-machine)))
+
+(define (cancel-all-breakpoints machine)
+  ((machine 'cancel-all-breakpoints)))
+
+
+(define (set-breakpoint machine label n) 
+   ((machine 'set-breakpoint ) label n) )
+
+(define (cancel-breakpoint machine label n) 
+   ((machine 'cancel-breakpoint) label n ))
 
 (define (make-assign inst machine labels operations pc)
   (let ((target
@@ -127,12 +175,13 @@
            (let* ((label-text (label-exp-label dest)) (insts
                   (lookup-label labels
                                 label-text)))
-             (lambda ()  ( (machine 'set-label!) label-text) (set-contents! pc insts))))
+             (lambda () ((machine 'reset-label-count)) ( (machine 'set-label!) label-text) (set-contents! pc insts))))
           ((register-exp? dest)
            (let* ((label-text (register-exp-reg dest)) (reg
                   (get-register machine
                                 label-text)))
              (lambda ()
+              ((machine 'reset-label-count)) 
               ( (machine 'set-label!) (car (get-contents reg)))
                (set-contents! pc (cdr (get-contents reg))))))
           (else (error "Bad GOTO instruction -- ASSEMBLE"
@@ -146,6 +195,7 @@
           (lambda ()
             (if (get-contents flag)
                (begin (set-contents! pc insts) 
+                      ((machine 'reset-label-count))
                       ((machine 'set-label!) label-text)) 
                 (advance-pc pc))))
         (error "Bad BRANCH instruction -- ASSEMBLE" inst))))
@@ -206,23 +256,4 @@
 (define (get-register machine reg-name)
   ((machine 'get-register) reg-name))
 
-(define rec-expt-machine 
-  (make-machine 
-    '(n b val continue) 
-    (list (list '* *) (list '- -) (list '= =)) 
-    '((assign continue (label expt-done))
-  expt-loop
-  (test (op =) (reg n) (const 0))
-  (branch (label base-case))
-  (save continue)
-  (assign n (op -) (reg n) (const 1))
-  (assign continue (label after-expt))
-  (goto (label expt-loop))
-  after-expt
-  (restore continue) 
-  (assign val (op *) (reg val) (reg b))
-  (goto (reg continue))
-  base-case
-  (assign val (const 1))
-  (goto (reg continue))
-  expt-done)))
+
