@@ -99,6 +99,8 @@
         (display "TRACING TURNED OFF" ))
 
       (define (set-breakpoint label n)
+        (display (list "BREAKPOINT LABEL: " label "POSITION: " n ) )
+        (newline)
         (set! breakpoints (cons (list label n) breakpoints ) )
         )
 
