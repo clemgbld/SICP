@@ -69,10 +69,4 @@
 
 )
 
-
-
-
-
-
-
 (run-registered-tests)
