@@ -1,7 +1,8 @@
 (load "ch-5/ch5-regsim.scm")
 
-
-;a 
+(define (fib n) (if (< n 2) 
+                  1 
+                  (+ (fib (- n  1) ) (fib (- n 2) ))))
 
 (define fib-machine 
   (make-machine '(n continue val) 

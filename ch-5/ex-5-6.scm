@@ -13,12 +13,13 @@ afterfib-n-1
 (assign n (op -) (reg n) (const 2)) 
 ; we can delete this line below
 (save continue)
-(assign continue (label afterfib-n-2)) (save val) 
+(assign continue (label afterfib-n-2)) 
+(save val) 
 afterfib-n-2 
 (assign n (reg val))
 (restore val)
 (restore continue)
-(assign val
+(assign val (op +) (reg val) (reg n))
   (goto (reg continue))
 immediate-answer
   (assign val (reg n))
