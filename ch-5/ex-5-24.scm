@@ -43,7 +43,7 @@ eval-dispatch
   (assign val (const "ELSE clause isn't last: COND->IF") )
   ev-cond-else-valid
   (assign exp (op cond-actions) (reg unenv))
-  (goto (label eval-dispatch ))
+  (goto (label ev-sequence ))
   ev-cond-decide
   (restore continue)
   (restore env)
