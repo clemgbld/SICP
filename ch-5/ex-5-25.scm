@@ -190,9 +190,7 @@ ev-appl-did-operator
   (restore env)
   (assign argl (op empty-arglist))
   (assign proc (reg val))
-  (test (op no-operands?) (reg unev))
-  (branch (label apply-dispatch))
-  (save proc)
+  (goto (label apply-dispatch))
 ev-appl-operand-loop
   (save argl)
   (assign exp (op first-operand) (reg unev))
@@ -201,7 +199,7 @@ ev-appl-operand-loop
   (save env)
   (save unev)
   (assign continue (label ev-appl-accumulate-arg))
-  (goto (label eval-dispatch))
+  (goto (label actual-value))
 ev-appl-accumulate-arg
   (restore unev)
   (restore env)
@@ -211,26 +209,42 @@ ev-appl-accumulate-arg
   (goto (label ev-appl-operand-loop))
 ev-appl-last-arg
   (assign continue (label ev-appl-accum-last-arg))
-  (goto (label eval-dispatch))
+  (goto (label actual-value))
 ev-appl-accum-last-arg
   (restore argl)
   (assign argl (op adjoin-arg) (reg val) (reg argl))
   (restore proc)
-  (goto (label apply-dispatch))
+  (goto (label primitive-apply))
+ev-appl-operand-loop-delayed
+  (test (op null?) (reg unev))
+  (branch (label compound-apply))
+  (assign exp (op first-operand) (reg unev))
+  (assign val (op delay-it) (reg exp) (reg env))
+  (assign argl (op adjoin-arg) (reg val) (reg argl))
+  (assign unev (op rest-operands) (reg unev))
+  (goto (label ev-appl-operand-loop-delayed))
 apply-dispatch
   (test (op primitive-procedure?) (reg proc))
-  (branch (label primitive-apply))
+  (branch (label list-of-values))
   (test (op compound-procedure?) (reg proc))  
-  (branch (label compound-apply))
+  (branch (label list-of-delayed-args))
   (goto (label unknown-procedure-type))
-
+  list-of-values
+  (test (op no-operands?) (reg unev))
+  (branch (label primitive-apply))
+  (save proc)
+  (goto (label ev-appl-operand-loop))
+  list-of-delayed-args
+  (test (op no-operands?) (reg unev))
+  (branch (label compound-apply))
+  (save proc)
+  (goto (label ev-appl-operand-loop-delayed))
 primitive-apply
   (assign val (op apply-primitive-procedure)
               (reg proc)
               (reg argl))
   (restore continue)
   (goto (reg continue))
-
 compound-apply
   (assign unev (op procedure-parameters) (reg proc))
   (assign env (op procedure-environment) (reg proc))
