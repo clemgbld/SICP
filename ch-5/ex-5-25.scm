@@ -28,11 +28,19 @@
 
 (define (thunk-env thunk) (caddr thunk))
 
+(define (tagged-list? exp tag)
+  (if (pair? exp)
+      (eq? (car exp) tag)
+      false))
+
+(define (thunk? obj) (tagged-list? obj 'thunk))
+
  (define eceval-operations
   (list
 
     ;lazy operations
     (list 'delay-it delay-it)
+    (list 'thunk? thunk?)
     (list 'thunk-exp thunk-exp)
     (list 'thunk-env thunk-env)
    ;list's operations
@@ -111,16 +119,16 @@
 read-eval-print-loop
   (perform (op initialize-stack))
   (perform
-   (op prompt-for-input) (const ";;; EC-Eval input:"))
+   (op prompt-for-input) (const ";;; EC-L-Eval input:"))
   (assign exp (op read))
   (assign env (op get-global-environment))
   (assign continue (label print-result))
-  (goto (label eval-dispatch))
+  (goto (label actual-value))
 print-result
 ;;**following instruction optional -- if use it, need monitored stack
   (perform (op print-stack-statistics))
   (perform
-   (op announce-output) (const ";;; EC-Eval value:"))
+   (op announce-output) (const ";;; EC-L-Eval value:"))
   (perform (op user-print) (reg val))
   (goto (label read-eval-print-loop))
 
@@ -215,14 +223,6 @@ ev-appl-accum-last-arg
   (assign argl (op adjoin-arg) (reg val) (reg argl))
   (restore proc)
   (goto (label primitive-apply))
-ev-appl-operand-loop-delayed
-  (test (op null?) (reg unev))
-  (branch (label compound-apply))
-  (assign exp (op first-operand) (reg unev))
-  (assign val (op delay-it) (reg exp) (reg env))
-  (assign argl (op adjoin-arg) (reg val) (reg argl))
-  (assign unev (op rest-operands) (reg unev))
-  (goto (label ev-appl-operand-loop-delayed))
 apply-dispatch
   (test (op primitive-procedure?) (reg proc))
   (branch (label list-of-values))
@@ -235,10 +235,13 @@ apply-dispatch
   (save proc)
   (goto (label ev-appl-operand-loop))
   list-of-delayed-args
-  (test (op no-operands?) (reg unev))
+  (test (op null?) (reg unev))
   (branch (label compound-apply))
-  (save proc)
-  (goto (label ev-appl-operand-loop-delayed))
+  (assign exp (op first-operand) (reg unev))
+  (assign val (op delay-it) (reg exp) (reg env))
+  (assign argl (op adjoin-arg) (reg val) (reg argl))
+  (assign unev (op rest-operands) (reg unev))
+  (goto (label list-of-delayed-args))
 primitive-apply
   (assign val (op apply-primitive-procedure)
               (reg proc)
@@ -314,7 +317,6 @@ ev-assignment-1
    (op set-variable-value!) (reg unev) (reg val) (reg env))
   (assign val (const ok))
   (goto (reg continue))
-
 ev-definition
   (assign unev (op definition-variable) (reg exp))
   (save unev)
@@ -375,13 +377,13 @@ ev-cond
   (assign continue (label force-it) )
   (goto (label eval-dispatch) )
   force-it
-  (test (op thunk?) (reg exp))
-  (branch (label un-thunk)
+  (test (op thunk?) (reg val))
+  (branch (label un-thunk))
   (restore continue)
   (goto (reg continue))
   un-thunk
-  (assign env (op thunk-env) (reg exp))
-  (assign exp (op thunk-exp) (reg exp))
+  (assign env (op thunk-env) (reg val))
+  (assign exp (op thunk-exp) (reg val))
   (goto (label actual-value))
    )))
 
