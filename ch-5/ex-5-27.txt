@@ -1,0 +1,68 @@
+;;; EC-Eval input:
+(factorial 2)
+
+(total-pushes = 48 maximum-depth = 13)
+;;; EC-Eval value:
+2
+
+;;; EC-Eval input:
+(factorial 3)
+
+(total-pushes = 80 maximum-depth = 18)
+;;; EC-Eval value:
+6
+
+;;; EC-Eval input:
+(factorial 4)
+
+(total-pushes = 112 maximum-depth = 23)
+;;; EC-Eval value:
+24
+
+;;; EC-Eval input:
+(factorial 5)
+
+(total-pushes = 144 maximum-depth = 28)
+;;; EC-Eval value:
+120
+
+;;; EC-Eval input:
+(factorial 6)
+
+(total-pushes = 176 maximum-depth = 33)
+;;; EC-Eval value:
+720
+
+;;; EC-Eval input:
+(factorial 7)
+
+(total-pushes = 208 maximum-depth = 38)
+;;; EC-Eval value:
+5040
+
+;;; EC-Eval input:
+(factorial 8)
+
+(total-pushes = 240 maximum-depth = 43)
+;;; EC-Eval value:
+40320
+
+;;; EC-Eval input:
+(factorial 9)
+
+(total-pushes = 272 maximum-depth = 48)
+;;; EC-Eval value:
+362880
+
+;;; EC-Eval input:
+(factorial 10)
+
+(total-pushes = 304 maximum-depth = 53)
+;;; EC-Eval value:
+3628800
+                maximum-depth      number-of-push
+iterative fact   10                 29 + (n * 35)
+recursive fact   3 + (n * 5)        (32 * n) - 16  
+
+
+
