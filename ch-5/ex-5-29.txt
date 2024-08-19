@@ -1,0 +1,66 @@
+;;; EC-Eval input:
+(fib 2)
+
+(total-pushes = 72 maximum-depth = 13)
+;;; EC-Eval value:
+1
+
+;;; EC-Eval input:
+(fib 3)
+
+(total-pushes = 128 maximum-depth = 18)
+;;; EC-Eval value:
+2
+
+;;; EC-Eval input:
+(fib 4)
+
+(total-pushes = 240 maximum-depth = 23)
+;;; EC-Eval value:
+3
+
+;;; EC-Eval input:
+(fib 5)
+
+(total-pushes = 408 maximum-depth = 28)
+;;; EC-Eval value:
+5
+
+;;; EC-Eval input:
+(fib 6)
+
+(total-pushes = 688 maximum-depth = 33)
+;;; EC-Eval value:
+8
+
+;;; EC-Eval input:
+(fib 7)
+
+(total-pushes = 1136 maximum-depth = 38)
+;;; EC-Eval value:
+13
+
+;;; EC-Eval input:
+(fib 8)
+
+(total-pushes = 1864 maximum-depth = 43)
+;;; EC-Eval value:
+21
+
+;;; EC-Eval input:
+(fib 9)
+
+(total-pushes = 3040 maximum-depth = 48)
+;;; EC-Eval value:
+34
+
+;;; EC-Eval input:
+(fib 10)
+
+(total-pushes = 4944 maximum-depth = 53)
+;;; EC-Eval value:
+55
+
+a) the formula for the maxium depth of the stack required to 
+compute fib(n) for n >= 2 is 3 + (n * 5) 
+
