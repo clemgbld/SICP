@@ -123,8 +123,27 @@
 
 (define (primitive-implementation proc) (cadr proc))
 
+(define (safe-divide a b)
+ (if (= b 0) 
+   'divide-by-zero-error
+   (/ a b)
+   ))
+
+(define (divide-by-zero-error? x) 
+  (eq? x 'divide-by-zero-error) )
+
+(define (safe-car p)
+  (cond ((not (pair? p) ) 'car-on-non-pair-error )
+        ((null? p) 'car-on-null-error )
+        (else (car p) )
+        ))
+
+(define (car-on-non-pair-error? x) (eq? x 'car-on-non-pair-error ) )
+
+(define (car-on-null-error? x) (eq? x 'car-on-null-error ))
+
 (define primitive-procedures
-  (list (list 'car car)
+  (list (list 'car safe-car)
         (list 'cdr cdr)
         (list 'cons cons)
         (list 'null? null?)
@@ -133,7 +152,7 @@
 	(list '- -)
 	(list '* *)
 	(list '= =)
-	(list '/ /)
+	(list '/ safe-divide)
 	(list '> >)
 	(list '< <)
         ))
@@ -257,7 +276,9 @@
    (list 'too-many-arguments-supplied-error? too-many-arguments-supplied-error?)
    (list 'first-operand first-operand)
    (list 'rest-operands rest-operands)
-
+   (list 'divide-by-zero-error? divide-by-zero-error?)
+   (list 'car-on-non-pair-error? car-on-non-pair-error?)
+   (list 'car-on-null-error? car-on-null-error? )
    ;;operations in eceval-support.scm
    (list 'true? true?)
    (list 'make-procedure make-procedure)
@@ -407,6 +428,12 @@ primitive-apply
   (assign val (op apply-primitive-procedure)
               (reg proc)
               (reg argl))
+  (test (op divide-by-zero-error?) (reg val))
+  (branch (label signal-error))
+  (test (op car-on-non-pair-error?) (reg val))
+  (branch (label signal-error))
+  (test (op car-on-null-error?) (reg val))
+  (branch (label signal-error))
   (restore continue)
   (goto (reg continue))
 
