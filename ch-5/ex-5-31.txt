@@ -1,0 +1,38 @@
+we have to save env for every expression
+
+(f 'x 'y)
+we don't need to save and restore the env for the operator since it is a symbol
+we don't need to save and restore the env for each operand since they are all symbol 
+we don't need to save and restore argl for each operand since they are all symbol
+we don't need to save and restore proc arround the operand sequence since they are all symbol
+
+----
+
+(f)
+for the f we don't need to save and restore anything since f is a symbol and there is no operand
+
+((f) 'x 'y)
+we need to save and restore the env for the operator since in (f) application we will assign the env to the f procedure environement
+we don't need to save and restore the env for each operand since they are all symbol 
+we don't need to save and restore argl for each operand since they are all symbol
+we don't need to save and restore proc arround the operand sequence since they are all symbol
+
+----
+
+for (g 'x) we don't need to save and restore anything since g is a symbol and and his operand is also a symbol
+
+(f (g 'x) y)
+
+we don't need to save and restore the env for the operator 'f since it is a symbol
+for the first operand we need to save and restore the env since the application of g will assign the env to the g procedure environement and we also need to save and restore argl since g take a parameter and save and restore proc as well because the last element is y and need the correct env
+for the second operand y we don't need to save and restore anything since it will only perform a variable lookup
+
+
+----
+
+for (g 'x) we don't need to save and restore anything since g is a symbol and and his operand is also a symbol
+
+(f (g 'x) 'y)
+we don't need to save and restore the env for the operator 'f since it is a symbol
+we don't need to save and restore proc and env but not the env the last argument is a quote and does not require the correct env and the correct proc
+for the second operand y we don't need to save and restore anything since it is a symbol 
