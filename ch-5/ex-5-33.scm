@@ -61,8 +61,9 @@
   (test (op primitive-procedure?) (reg proc)) 
   (branch (label primitive-branch11)) 
   compiled-branch10 
-  (assign continue(label after-call9)) 
-  (assign val (op compiled-procedure-entry) (reg proc)) (goto (reg val))
+  (assign continue (label after-call9)) 
+  (assign val (op compiled-procedure-entry) (reg proc)) 
+  (goto (reg val))
   primitive-branch11 
   (assign val (op apply-primitive-procedure) (reg proc) (reg argl)) 
   after-call9 
@@ -75,7 +76,8 @@
   (test (op primitive-procedure?) (reg proc)) 
   (branch (label primitive-branch14)) 
   compiled-branch13 
-  (assign val (op compiled-procedure-entry) (reg proc)) (goto (reg val)) 
+  (assign val (op compiled-procedure-entry) (reg proc)) 
+  (goto (reg val)) 
   primitive-branch14 
   (assign val (op apply-primitive-procedure) (reg proc) (reg argl)) 
   (goto (reg continue)) 
