@@ -40,8 +40,8 @@
    (assign proc (op lookup-variable-value) (const *) (reg env)) 
    (save continue) 
    (save proc) 
-   (save env) 
-   (assign proc (op lookup-variable-value) (const factorial-alt) (reg env)) 
+   (save env) ; the env here but doesn't in the factorial compilation
+   (assign proc (op lookup-variable-value) (const factorial-alt) (reg env)) ; assign and save the proc factorial-alt before looking up the variable n and construct the argl unlike factorial that does the reverse because arguments are evaluated form right to left 
    (save proc) 
    (assign proc (op lookup-variable-value) (const -) (reg env)) 
    (assign val (const 1)) 
@@ -66,7 +66,8 @@
   primitive-branch11 
   (assign val (op apply-primitive-procedure) (reg proc) (reg argl)) 
   after-call9 
-  (assign argl (op list) (reg val)) (restore env) 
+  (assign argl (op list) (reg val)) 
+  (restore env) ;restore the extra env here 
   (assign val (op lookup-variable-value)(const n) (reg env)) 
   (assign argl (op cons) (reg val) (reg argl)) 
   (restore proc) 
@@ -83,3 +84,5 @@
   after-lambda1 
   (perform (op define-variable!) (const factorial-alt) (reg val) (reg env)) 
   (assign val (const ok))))
+
+;b) the original factorial also has an extra argl save and restore thus they are equally efficient 
