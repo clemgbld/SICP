@@ -1,8 +1,4 @@
 
-
-
-
-
 (define (find-variable target cenv) 
     (define (iter cenv count) 
       (cond ((null? cenv) 'not-found)
