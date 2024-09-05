@@ -114,17 +114,16 @@
     `((assign ,target (const ,(text-of-quotation exp)))))))
 
 (define (compile-variable exp target linkage compile-time-env)
-  (let ((not-found-branch (make-label 'not-found)) 
-        (end-var-branch (make-label 'end-var))
-        (var-address (find-variable exp compile-time-env))
-        )
-    (end-with-linkage linkage
+  (let ( (var-address (find-variable exp compile-time-env)))
+    (if (not-found? var-address)
+  (end-with-linkage linkage
    (make-instruction-sequence '(env) (list target)
-     (if (not-found? var-address) 
-       `((assign ,target (op get-global-environment))
-        (assign ,target (op lookup-variable-value) (reg exp) (reg ,target)))
-
-       `((assign ,target (op lexical-address-lookup) (const ,var-address) (reg env))))))))
+       `(
+        (assign ,target (op lookup-variable-value) (reg exp) (reg env)))))
+  (end-with-linkage linkage
+   (make-instruction-sequence '(env) (list target)
+       `((assign ,target (op lexical-address-lookup) 
+                 (const ,var-address) (reg env))))))))
 
 (define (compile-assignment exp target linkage compile-time-env)
   (let* ((var (assignment-variable exp))
@@ -136,11 +135,11 @@
       get-value-code
       (make-instruction-sequence '(env val) (list target)
         (if (not-found? var-address) 
-          `((assign ,target (op get-global-environment))
+          `(
             (perform (op set-variable-value!)
                   (const ,var)
                   (reg val)
-                  (reg ,target))
+                  (reg env))
          (assign ,target (const ok)))
           `((perform (op lexical-address-set!) 
                      (const ,var-address) (reg env) (reg val))
