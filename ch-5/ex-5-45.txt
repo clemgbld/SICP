@@ -1,0 +1,74 @@
+------------ COMPILED FACTORIAL ------------------------------------
+;;; EC-Eval input:
+(factorial 2)
+
+(total-pushes = 13 maximum-depth = 5)
+;;; EC-Eval value:
+2
+
+;;; EC-Eval input:
+(factorial 3)
+
+(total-pushes = 19 maximum-depth = 8)
+;;; EC-Eval value:
+6
+
+;;; EC-Eval input:
+(factorial 4)
+
+(total-pushes = 25 maximum-depth = 11)
+;;; EC-Eval value:
+24
+
+;;; EC-Eval input:
+(factorial 5)
+
+(total-pushes = 31 maximum-depth = 14)
+;;; EC-Eval value:
+120
+
+;;; EC-Eval input:
+(factorial 6)
+
+(total-pushes = 37 maximum-depth = 17)
+;;; EC-Eval value:
+720
+
+;;; EC-Eval input:
+(factorial 7)
+
+(total-pushes = 43 maximum-depth = 20)
+;;; EC-Eval value:
+5040
+
+;;; EC-Eval input:
+(factorial 8)
+
+(total-pushes = 49 maximum-depth = 23)
+;;; EC-Eval value:
+40320
+
+;;; EC-Eval input:
+(factorial 9)
+
+(total-pushes = 55 maximum-depth = 26)
+;;; EC-Eval value:
+362880
+
+;;; EC-Eval input:
+(factorial 10)
+
+(total-pushes = 61 maximum-depth = 29)
+;;; EC-Eval value:
+3628800
+
+total-pushes = 1 + (n * 6)
+maxium-depth =  (n * 3) - 1
+----- SEPCIAL PURPOSE FACT MACHINE ----
+
+total-pushes = 2 * (n - 1)
+maxium-depth = 2 * (n - 1)
+
+indeed the special purpose fact machine perform much better
+
+b) implementing open code primitives form ex-5-38 would have reduce the push and maxium depth

@@ -140,41 +140,79 @@
 		 (list 'reg reg))
 	   arg-regs))
 
-(define (compile-open-code operation operands-list target linkage)
-  (let ((operands-length (length operands-list)))
+( define (make-application proc operands-list) 
+              (append (list proc ) operands-list ))
+
+(define (compile-open-code operation operands-list target linkage cenv)
+  (let ((operands-length (length operands-list)) 
+        (var-address (find-variable operation cenv)) 
+       (primitive-label (make-label 'primitive'))
+       (end-label (make-label 'end) )
+       )
 	(if (> operands-length total-arg-regs)
 		(error "Open code primitive operands are more than the available arg regs.")
 		(let ((arg-regs (take all-arg-regs operands-length)))
 		  ;;recall that end-with-linkage preserves continue register
-		  (end-with-linkage
+      (if (not-found? var-address) 
+        (end-with-linkage
 		   linkage
 		   (append-instruction-sequences
 			(spread-arguments operands-list)
 			(make-instruction-sequence
 			 arg-regs
 			 `(,target)
-			 `((assign ,target
+			 `(
+         (assign ,target (op lookup-variable-value ,operation (reg env)))
+         (test (op primitive-procedure? (reg ,target)))
+         (branch (label ,primitive-label) )
+         (assign ,target (op make-application (reg ,target) operands-list))
+         (assign ,target (compile (reg ,target) ,target next ,cenv) )
+         (goto (label ,end-label))
+         ,primitive-label
+         (assign ,target
 					   (op ,operation)
 					   . ;;notice the dot
-					   ,(make-arg-regs-list arg-regs))))))))))
+					   ,(make-arg-regs-list arg-regs))
+         ,end-label))))
+(end-with-linkage
+		   linkage
+		   (append-instruction-sequences
+			(spread-arguments operands-list)
+			(make-instruction-sequence
+			 arg-regs
+			 `(,target)
+			 `(
+         (assign ,target (op lexical-address-lookup ,operation cenv))
+         (test (op primitive-procedure? (reg ,target)))
+         (branch (label ,primitive-label) )
+         (assign ,target (op make-application (reg ,target) operands-list))
+         (assign ,target (compile (reg ,target) ,target next ,cenv) )
+         (goto (label ,end-label))
+         ,primitive-label
+         (assign ,target
+					   (op ,operation)
+					   . ;;notice the dot
+					   ,(make-arg-regs-list arg-regs)
+             end-label
+             ))))))))))
 
 (define (same? exp) (tagged-list? exp '=))
 (define (mul? exp) (tagged-list? exp '*))
 (define (sub? exp) (tagged-list? exp '-))
 (define (add? exp) (tagged-list? exp '+))
 
-(define (compile-same exp target linkage)
-  (compile-open-code '= (operands exp) target linkage))
+(define (compile-same exp target linkage cenv)
+  (compile-open-code '= (operands exp) target linkage cenv))
 
-(define (compile-sub exp target linkage)
-  (compile-open-code '- (operands exp) target linkage))
+(define (compile-sub exp target linkage cenv)
+  (compile-open-code '- (operands exp) target linkage cenv))
 
 ;;below to procedures contains the change correspoding to part(d)
-(define (compile-add exp target linkage)
-  (split-and-compile '+ (operands exp) target linkage))
+(define (compile-add exp target linkage cenv)
+  (split-and-compile '+ (operands exp) target linkage cenv))
 
-(define (compile-mul exp target linkage)
-  (split-and-compile '* (operands exp) target linkage))
+(define (compile-mul exp target linkage cenv)
+  (split-and-compile '* (operands exp) target linkage cenv))
 
 
 (define (split items n)
@@ -186,12 +224,12 @@
 							(car n-1-split))
 					  (cdr n-1-split))))))
 
-(define (split-and-compile operator operands target linkage)
+(define (split-and-compile operator operands target linkage cenv)
   (let ((splitted (split operands total-arg-regs)))
 	(let ((first-part (car splitted))
 		  (rem-part (cdr splitted)))
 	  (if (null? rem-part)
-		  (compile-open-code operator first-part target linkage)
+		  (compile-open-code operator first-part target linkage cenv)
 		  (let ((new-operand-1 (cons operator first-part))
 				(new-operand-2 (if (null? (cdr rem-part))
 								   (car rem-part)
@@ -199,7 +237,7 @@
 			(compile-open-code operator
 							   (list new-operand-1 new-operand-2)
 							   target
-							   linkage))))))
+							   linkage cenv))))))
 
 
 
