@@ -1,0 +1,108 @@
+------- COMPILER FIB ----------------
+
+;;; EC-Eval input:
+(fib 2)
+
+(total-pushes = 17 maximum-depth = 5)
+;;; EC-Eval value:
+1
+
+;;; EC-Eval input:
+(fib 3)
+
+(total-pushes = 27 maximum-depth = 8)
+;;; EC-Eval value:
+2
+
+;;; EC-Eval input:
+(fib 4)
+
+(total-pushes = 47 maximum-depth = 11)
+;;; EC-Eval value:
+3
+
+;;; EC-Eval input:
+(fib 5)
+
+(total-pushes = 77 maximum-depth = 14)
+;;; EC-Eval value:
+5
+
+;;; EC-Eval input:
+(fib 6)
+
+(total-pushes = 127 maximum-depth = 17)
+;;; EC-Eval value:
+8
+
+;;; EC-Eval input:
+(fib 7)
+
+(total-pushes = 207 maximum-depth = 20)
+;;; EC-Eval value:
+13
+
+;;; EC-Eval input:
+(fib 8)
+
+(total-pushes = 337 maximum-depth = 23)
+;;; EC-Eval value:
+21
+
+;;; EC-Eval input:
+(fib 9)
+
+(total-pushes = 547 maximum-depth = 26)
+;;; EC-Eval value:
+34
+
+;;; EC-Eval input:
+(fib 10)
+
+(total-pushes = 887 maximum-depth = 29)
+;;; EC-Eval value:
+55
+
+total-pushes= 10fib n + 1  - 3
+maxium-depth =  (n * 3) - 1
+
+(FIB MACHINE INPUT: 2)
+
+(total-pushes = 4 maximum-depth = 2)
+(FIB MACHINE RESULT 1)
+(FIB MACHINE INPUT: 3)
+
+(total-pushes = 12 maximum-depth = 4)
+(FIB MACHINE RESULT 2)
+(FIB MACHINE INPUT: 4)
+
+(total-pushes = 28 maximum-depth = 6)
+(FIB MACHINE RESULT 3)
+(FIB MACHINE INPUT: 5)
+
+(total-pushes = 56 maximum-depth = 8)
+(FIB MACHINE RESULT 5)
+(FIB MACHINE INPUT: 6)
+
+(total-pushes = 104 maximum-depth = 10)
+(FIB MACHINE RESULT 8)
+(FIB MACHINE INPUT: 7)
+
+(total-pushes = 184 maximum-depth = 12)
+(FIB MACHINE RESULT 13)
+(FIB MACHINE INPUT: 8)
+
+(total-pushes = 316 maximum-depth = 14)
+(FIB MACHINE RESULT 21)
+(FIB MACHINE INPUT: 9)
+
+(total-pushes = 532 maximum-depth = 16)
+(FIB MACHINE RESULT 34)
+(FIB MACHINE INPUT: 10)
+
+(total-pushes = 884 maximum-depth = 18)
+(FIB MACHINE RESULT 55)
+
+
+total-pushes= 3fib n + 1  - 3
+maxium-depth =  (n * 2) - 2 
