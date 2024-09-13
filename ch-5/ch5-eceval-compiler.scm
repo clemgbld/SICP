@@ -69,9 +69,8 @@
    ;;used by compiled code
    (list 'list list)
    (list 'cons cons)
-
-   ;;operations in syntax.scm
    (list 'self-evaluating? self-evaluating?)
+   ;;operations in syntax.scm
    (list 'quoted? quoted?)
    (list 'text-of-quotation text-of-quotation)
    (list 'variable? variable?)
